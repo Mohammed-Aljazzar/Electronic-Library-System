@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Comments for {{ book.title }}{% endblock %}
+
+{% block style %}
+.rating-filled {
+    color: #f1c40f;
+}
+.rating-empty {
+    color: #ccc;
+}
+{% endblock style %}
+    
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="">
+            <ol class="breadcrumb bg-success p-2">
+                <li class="breadcrumb-item"><a href="{% url 'library:books' %}" style="text-decoration: none; color: white;">Books</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'library:book_detail' book.id %}" style="text-decoration: none; color: white;">{{ book.title }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page" style="color: white;">All Comments</li>
+            </ol>
+        </nav>
+        
+        <h2 class="mb-4">All Comments for "{{ book.title }}"</h2>
+        <div class="row">
+            <div class="col-12">
+                {% for comment in comments %}
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex"> 
+                                    {% if comment.user.profile_picture %}
+                                        <img src="{{ comment.user.profile_picture.url }}" alt="{{ comment.user.username }}" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'img/logo.png' %}" alt="Default Avatar" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                                    {% endif %}
+                                    <p class="card-text mx-2 mt-1">{{ comment.user.username }}</p>
+                                </div>
+                                <div>
+                                    <small>since {{ comment.created_at|timesince }} ago</small>
+                                </div>
+                            </div>
+                            <p class="card-text mt-1">{{ comment.text }}</p>
+                            <span>
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= comment.rating %}
+                                        <span class="rating-filled">⭐</span>
+                                    {% else %}
+                                        <span class="rating-empty">✰</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">No comments yet.</p>
+                {% endfor %}
+
+                <!-- Pagination Controls -->
+                {% if comments.paginator.num_pages > 1 %}
+                    <nav aria-label="Comments pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if comments.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="First">
+                                        <span aria-hidden="true">««</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ comments.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">««</span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link">«</span>
+                                </li>
+                            {% endif %}
+
+                            {% for num in comments.paginator.page_range %}
+                                {% if comments.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > comments.number|add:'-3' and num < comments.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if comments.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ comments.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ comments.paginator.num_pages }}" aria-label="Last">
+                                        <span aria-hidden="true">»»</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">»</span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link">»»</span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+        
+        <a href="{% url 'library:book_detail' book.id %}" class="btn btn-secondary my-2">Return to Back</a>
+    </div>
+</div>
+{% endblock %}

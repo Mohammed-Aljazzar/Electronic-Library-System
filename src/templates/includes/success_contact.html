@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{%block title%}Message sent{%endblock%}
+{% block navbar %}
+
+{% endblock %}
+{% block content %}
+<div style="position: relative;">
+
+    <div class="container mt-5" style="position: absolute; left:50%;top:120px; transform: translateX( -50%);">
+        <div class="row justify-content-center">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body" style="color: #000;">
+                    <h2 class="text-center text-success">Thank You!</h2>
+                    <p class="text-center">Your message has been sent successfully. Our team will get back to you soon.</p>
+                    <div class="text-center">
+                        <a href="{% url 'library:contact' %}" class="btn btn-success mt-3">Send Another Message</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+{% endblock %}
+
+    {% block footer %}
+
+{% endblock footer %}

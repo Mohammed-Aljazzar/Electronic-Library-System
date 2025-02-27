@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block title %}Delete Account{% endblock %}
+{% block navbar %}
+
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <!-- Back Arrow Button -->
+                <button onclick="window.history.back()" class="btn btn-link text-dark position-absolute" style="top: 10px; left: 10px; font-size:20px">
+                    <i class="fa fa-arrow-left text-primary"></i> <!-- Bootstrap Icons for the left arrow -->
+                </button>
+
+                <h2 class="text-center mt-5">Delete Account</h2>
+                <form method="post" action="{% url 'accounts:delete_account' %}">
+                    {% csrf_token %}
+                    <p class="text-center">Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <div class="row w-100 m-auto">
+                        <button type="submit" class="btn btn-danger">Delete My Account</button>
+                    </div>
+                    <div class="row w-100 m-auto mt-3">
+                        <a href="{% url 'library:home' %}" class="btn btn-primary">Cancel</a>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <a href="{% url 'accounts:login' %}" class="text-decoration-none">Back to Login</a>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+    
+{% endblock footer %}

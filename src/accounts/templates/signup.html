@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%block title%}Sign Up{%endblock%}
+{% block navbar %}
+
+{% endblock %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-12">
+                <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <!-- Back Arrow Button -->
+                        <button onclick="window.history.back()" class="btn btn-link text-dark position-absolute" style="top: 10px; left: 10px; font-size:20px">
+                            <i class="fa fa-arrow-left text-primary"></i> <!-- Bootstrap Icons for the left arrow -->
+                        </button>
+                        <h2 class="text-center mt-5 mb-4">Create an Account</h2>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{form.username|as_crispy_field}}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{form.email|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.first_name|as_crispy_field }}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.last_name |as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.country_code|as_crispy_field}}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.phone_number|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.address|as_crispy_field}}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.residence|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.profession|as_crispy_field}}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.gender|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 ">
+                                    {{ form.profile_picture|as_crispy_field}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.password|as_crispy_field}}
+                                </div>
+                                <div class="form-group col-12 col-lg-6">
+                                    {{ form.confirm_password|as_crispy_field }}
+                            </div>
+                            <div class="row w-100 m-auto">
+                                <button type="submit" class="btn btn-success ">Sign Up</button>
+                            </div>
+                            
+                        </form> 
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+
+
+
+{% block footer %}
+    
+{% endblock footer %}

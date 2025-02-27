@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-1">
+    <h2>Search Results</h2>
+    
+    {% comment %} {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}info{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %} {% endcomment %}
+
+    {% if search_term or current_category != 'All' %}
+        <p>Results for{% if search_term %} "{{ search_term }}"{% endif %}{% if current_category != 'All' %} in category "{{ current_category }}"{% endif %}:</p>
+    {% endif %}
+
+    {% if books %}
+    {% for book in books %}
+        {% if book.status == 'approved' %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4"> <!-- 3 أعمدة للشاشات الكبيرة، عمودين للشاشات المتوسطة، وعمود واحد للشاشات الصغيرة -->
+                <a href="{% url 'library:book_detail' book.id %}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow">
+                        <img src="{{ book.poster_image.url }}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
+                        <div class="card-body">
+                            <!-- عنوان الكتاب وعدد المشاهدات -->
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <!-- التصنيف مع خلفية مدورة -->
+                            <p class="card-text">
+                                <span class="badge bg-success rounded-pill">{{ book.category }}</span>
+                            </p>
+
+                            
+                            <!-- المؤلف -->
+                            <p class="card-text">Written by <strong>{{ book.author }}</strong></p>
+                            
+                            <div class="row">
+                                
+                                <!-- التقييم -->
+                                <p class="card-text col-6">
+                                    <small class="text-muted"> 
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= book.rating %}
+                                                ⭐
+                                            {% else %}
+                                                ☆
+                                            {% endif %}
+                                        {% endfor %}
+                                    </small>
+                                </p>
+                                <div style="position: relative;" class="col-6 ">
+                                    
+                                    <p class="card-text text-secondary" style="position: absolute; right: 5%;"><small class="text-muted text-secondary">{{ book.views_count }} <i class="fa fa-eye text-secondary"></i></small></p>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {%endif%}
+    {% endfor %}
+    {% else %}
+        <div class="alert alert-danger">No <b>"{{ search_term }}"</b> found matching your criteria.</div>
+    {% endif %}
+    <a href="{% url 'library:home' %}" class="btn btn-secondary mt-3 mb-4">Back to Home</a>
+</div>
+    {% comment %} {% include "includes/footer.html" %} {% endcomment %}
+
+{% block footer %}
+    
+{% endblock footer %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %}
+{% block navbar %}
+
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <!-- Back Arrow Button -->
+                <button onclick="window.history.back()" class="btn btn-link text-dark position-absolute" style="top: 10px; left: 10px; font-size:20px">
+                    <i class="fa fa-arrow-left text-primary"></i> <!-- Bootstrap Icons for the left arrow -->
+                </button>
+
+                <h2 class="text-center mt-5">Login</h2>
+                <form method="POST" autocomplete="on">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-group mb-2 d-flex justify-content-between">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                            <label class="form-check-label" for="rememberMe">Remember Me</label>
+                        </div>
+                        <div>
+                            <a href="{% url 'accounts:password_reset' %}" class="text-decoration-none">Forget Password?</a>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-auto">
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <input type="hidden" name="next" value="{{next}}">
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    Don't have an account?
+                    <a href="{% url 'accounts:signup' %}" class="text-decoration-none">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+    
+{% endblock footer %}

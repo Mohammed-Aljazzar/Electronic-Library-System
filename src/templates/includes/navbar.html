@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'library:home'%}">Towards the Future</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a href="{% url 'library:home'%}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'library:books'%}" class="nav-link">Books</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Authors</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-user-circle text-light" style="font-size:x-large;"></i>
+                    </a>
+                    <div class="dropdown-menu translate-x-50" aria-labelledby="navbarDropdownMenuLink" >
+                        <a class="dropdown-item" href="{%url 'accounts:update_profile'%}">My Profile</a>
+                        <a class="dropdown-item" href="{%url 'accounts:password_change' %}">Change Password</a>
+                        <a class="dropdown-item" href="{%url 'accounts:delete_account' %}">Delete account</a>
+                        <a class="dropdown-item" href="{%url 'accounts:logout'%}">Logout</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'accounts:signup' %}" class="nav-link rounded">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'accounts:login' %}" class="nav-link rounded">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

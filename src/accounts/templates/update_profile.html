@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Update Profile{% endblock %}
+{% block navbar %}
+
+{% endblock %}
+{% block content %}
+<div class="d-flex rounded align-items-center" style="z-index: 999;position: relative;">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-12">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <!-- Back Arrow Button -->
+                    <button onclick="window.history.back()" class="btn btn-link text-dark position-absolute" style="top: 10px; left: 10px; font-size:20px">
+                        <i class="fa fa-arrow-left text-primary"></i> <!-- Bootstrap Icons for the left arrow -->
+                    </button>
+                    <h2 class="text-center mt-5 mb-4">Update My Profile</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 mt-5 col-12 col-lg-6">
+                                <!-- عرض الصورة الحالية -->
+                                {% if form.instance.profile_picture %}
+                                    <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px; max-height: 200px;">
+                                {% else %}
+                                    <p>No profile picture available.</p>
+                                {% endif %}
+                            </div>
+                            <div style="position: relative;" class="col-12 col-lg-6">
+                                <!-- زر لتعديل الصورة -->
+                                <label for="id_profile_picture" class="btn btn-success" style="position: absolute; bottom: 0; right: 0;">
+                                    <i class="fa fa-edit"></i> Change Picture
+                                </label>
+                                <!-- حقل تحميل الصورة المخفي -->
+                                <p hidden>{{ form.profile_picture }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.username|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.email|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.first_name|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.last_name|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.country_code|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.phone_number|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.address|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.residence|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.profession|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-12 col-lg-6">
+                                {{ form.gender|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row w-100 m-auto">
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block footer %}
+    
+{% endblock footer %}

@@ -1,0 +1,192 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%} {%endblock%}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <style>
+        .messages {
+            list-style: none;
+            padding: 0;
+            position: absolute; 
+            top: 60px;
+            left: 50%; 
+            width: 80%; 
+            transform:translateX(-50%);
+            height:60px;
+        }
+        .messages li {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .messages .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .messages .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .messages .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .messages .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        @media (max-width: 575px) {
+            .translate-x-50 {
+                transform: translateX(0%);
+            }
+        }
+        @media (min-width: 575px) {
+            .translate-x-50 {
+                transform: translateX(-60%);
+            }
+        }
+        @media (min-width: 768px) {
+            .translate-x-50 {
+                transform: translateX(-70%);
+            }
+        }
+        
+        /* New CSS for the quote section */
+        .quote-section {
+            background: linear-gradient(45deg, #1e1e24, #6e6e80);
+            color: #fff;
+            padding: 50px 0;
+        }
+        .quote {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .quote-author {
+            font-size: 18px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+        footer {
+            color: #fff;
+            padding: 30px 0;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            color: #fff;
+        }
+        .footer-section {
+            flex: 1;
+            margin-right: 20px;
+            color: #fff;
+        }
+        .footer-section:last-child {
+            margin-right: 0;
+            color: #fff;
+        }
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            color: #fff;
+        }
+        .footer-section ul li {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .footer-section li a {
+            text-decoration: none;
+            transition: color 0.3s ease;
+            color: #fff;
+        }
+        .footer-section a:hover {
+            color: #fff;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #fff;
+        }
+    </style>
+    <style>
+        {% block style %}
+
+{% endblock %}
+    </style>
+        
+</head>
+<body >
+    {%block navbar%}
+        {% include "includes/navbar.html" %}
+    {%endblock%}
+    
+    <div class="">
+        <div class="d-flex rounded align-items-center container">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    {%block footer%}
+    {% include "includes/footer.html" %}
+    {%endblock footer%}
+
+        <!-- Bootstrap JS -->
+        <script>
+            import { Collapse, Ripple, initMDB } from "mdb-ui-kit";
+            initMDB({ Collapse, Ripple });
+
+            import { Dropdown, initMDB } from "mdb-ui-kit";
+            initMDB({ Dropdown });
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // تحديد جميع عناصر الرسائل
+                const messages = document.querySelectorAll('.messages li');
+    
+                // إخفاء كل رسالة بعد 5 ثواني
+                messages.forEach(function(message) {
+                    setTimeout(function() {
+                        message.style.display = 'none';
+                    }, 5000); // 5000 ميلي ثانية = 5 ثواني
+                });
+            });
+
+
+
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    </body>
+</html>

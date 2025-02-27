@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home Page{% endblock %}
+{% block style %}
+@media (max-width: 575px) {
+    .translate-x-50 {
+        transform: translateX(0%);
+    }
+}
+@media (min-width: 575px) {
+    .translate-x-50 {
+        transform: translateX(-60%);
+    }
+}
+@media (min-width: 768px) {
+    .translate-x-50 {
+        transform: translateX(-70%);
+    }
+}
+footer {
+    background-color: #1e1e24;
+    color: #fff;
+    padding: 30px 0;
+}
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-section {
+    flex: 1;
+    margin-right: 20px;
+}
+.footer-section:last-child {
+    margin-right: 0;
+}
+.footer-section h4 {
+    margin-bottom: 15px;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+.footer-section a {
+    color: #6e6e80;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer-section a:hover {
+    color: #fff;
+}
+.copyright {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.quote-section {
+    background: linear-gradient(to right, rgba(86, 204, 157, 1), rgba(86, 204, 157, 0.5));
+    padding: 50px 0;
+    color: #fff;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+.quote-section h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
+}
+
+.quote {
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.6;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 20px;
+    border-left: 4px solid #3d8b6e;
+}
+
+.quote::before {
+    content: '“';
+    font-size: 3rem;
+    color: #56cc9d;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    opacity: 0.7;
+}
+
+.quote::after {
+    content: '”';
+    font-size: 3rem;
+    color: #56cc9d;
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
+    opacity: 0.7;
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #e0f7ef;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.top-books-section {
+    padding: 50px 0;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.top-books-section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.book-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    height: 100%;
+    text-decoration: none;
+}
+
+.book-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.book-card img {
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 3px solid #56cc9d;
+}
+
+.book-card .card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.book-card .card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.book-card .category {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.book-card .rating {
+    font-size: 1rem;
+    color: #f39c12;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.book-card .btn {
+    background-color: #56cc9d;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.book-card .btn:hover {
+    background-color: #3d8b6e;
+}
+
+.book-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.rating-filled {
+    color: #f1c40f;
+}
+.rating-empty {
+    color: #ccc;
+}
+{% endblock %}
+
+{% block content %}
+<div class="pt-3">
+    <section class="landing-page pt-5" style="height: 90vh;">
+        <div class="container text-center">
+            <h1 class="display-4 text-success">Welcome to Towards the Future Library</h1>
+            <p class="text-success lead">Browse through a wide collection of books and discover endless knowledge.</p>
+            <img src="{% static 'img/logo.png' %}" alt="" class="w-40 h-20 rounded" style="height: 200px;">
+
+            <div class="mt-4">
+                <form action="{% url 'library:search_results' %}" method="get">
+                    <div class="row justify-content-center mt-5">
+                        <!-- Search Bar -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <input type="text" name="q" class="form-control search-bar" placeholder="Search for books..." aria-label="Search">
+                        </div>
+                        <!-- Category Filter -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <select name="category" class="form-control category-filter">
+                                <option value="">Select Category</option>
+                                <option value="">All</option>
+                                {% for category in categories %}
+                                    <option value="{{ category }}" {% if category == current_category %}selected{% endif %}>{{ category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Search Button -->
+                        <div class="w-100">
+                            <button type="submit" class="btn btn-primary w-100 text-center d-block">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="top-books-section">
+        <div class="container">
+            <h2 class="text-center">Top Viewed Books</h2>
+            <div class="row justify-content-center">
+                {% for item in top_viewed_books %}
+                <div class="col-12 col-lg-4 mb-4">
+                    <a href="{% url 'library:book_detail' item.book.id %}" style="text-decoration: none;">
+                        <div class="card book-card h-100">
+                            <img src="{{ item.book.poster_image.url }}" class="card-img-top" alt="{{ item.book.title }}">
+                            <div class="card-body">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <h5 class="card-title">{{ item.book.title }}</h5>
+                                    <div style="position: relative; padding: 20px;">
+                                        <span class="category p-1" style="border-radius: 15px; font-size: 14px; font-weight: bold; position: absolute; top: 50%; right: 1%; transform: translate(1%,-50%); background-color: #56cc9d; color: white;">{{ item.book.category }}</span>
+                                    </div>
+                                </div>
+                                <div class="" style="display: flex; justify-content: space-between;">
+                                    <span class="rating" style="font-weight: light;">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= item.average_rating %}
+                                                <span class="rating-filled">⭐</span>
+                                            {% else %}
+                                                <span class="rating-empty">☆</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        ({{ item.average_rating|floatformat:1 }}/5)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                    <div class="col-12 mb-4">
+                        <div class="card book-card">
+                            <img src="{% static 'img/not.png' %}" class="card-img-top" alt="No Books" style="object-fit: contain">
+                            <div class="card-body">
+                                <h5 class="card-title">No Books Available</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section pt-3">
+        <div class="container">
+            <h2 class="text-center" style="font-size: 28px;">Inspired Quote</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    {% if latest_book_with_quote.quote %}
+                        <blockquote class="quote">
+                            {{ latest_book_with_quote.quote }}
+                        </blockquote>
+                        <p class="quote-author">- {{ latest_book_with_quote.author }}</p>
+                    {% else %}
+                        <blockquote class="quote">
+                            “Books are the quietest and most constant of friends; they are the most accessible and wisest of counselors, and the most patient of teachers.”
+                        </blockquote>
+                        <p class="quote-author">- Charles W. Eliot</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section pt-5 pb-5">
+        <div class="">
+            <h2 class="text-center" style="font-size: 28px; font-weight: 900; font-weight: bold;">Contact Us</h2>
+            <h5 class="mt-3 text-center mb-3" style="word-spacing: 2px; line-height: 35px;">
+                If you have a question or inquiry, do not hesitate to contact us and the team will respond to you.
+            </h5>
+        </div>
+        <div class="container">
+            <div class="">
+                <div class="">
+                    <form class="contact-form" action="{% url 'library:contact' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <textarea class="form-control" id="messageTextarea" rows="8" placeholder="Your message here" name="message" required></textarea>
+                        </div>
+                        <div class="text-left">
+                            <button type="submit" class="btn btn-success">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
