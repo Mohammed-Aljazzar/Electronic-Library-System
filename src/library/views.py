@@ -56,7 +56,8 @@ def about(request):
 def book_list(request):
     # استرداد جميع الكتب مع حساب متوسط التقييم
     books = Book.objects.all().annotate(average_rating=Avg('comments__rating'))
-    
+    featured_book = Book.objects.filter(status='published').order_by('-publish_date').first()
+
     # فلتر حسب التصنيف
     selected_category = request.GET.get('category')
     if selected_category:
@@ -105,6 +106,7 @@ def book_list(request):
         'selected_language': selected_language,
         'selected_rating': selected_rating,
         'selected_publish_date': selected_publish_date,
+        'featured_book':featured_book,
     })
 
 

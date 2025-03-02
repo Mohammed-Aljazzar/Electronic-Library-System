@@ -166,7 +166,14 @@
             <div class="card mb-4 shadow">
                 <div class="card-body">
                     <h5 class="card-title">Advertisements</h5>
-                    <p class="card-text">This is an advertisement space.</p>
+                    
+                    {% if featured_book %}
+                        <p class="card-text">We advise you to read <span class="text-primary" style="font-weight: 700;">{{featured_book}}</span> book, maybe it will be useful to you, what are you waiting for? Find out now </p>
+                        <a href="{% url 'library:book_detail' featured_book.id %}" class="btn btn-primary btn-sm">Discover Now</a>
+                    {% else %}
+                        <p class="card-text">This is an advertisement space.</p>
+                   
+                    {% endif %}
                 </div>
             </div>
             
