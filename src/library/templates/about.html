@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}About Library System{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <!-- العنوان الرئيسي -->
+    <h2 class="text-center mb-5" style="font-weight: 600; color: #2c3e50;">About Our Library System</h2>
+    
+    <!-- المقدمة -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-1" style="border-radius: 20px; background-color: #f8f9fa;">
+                <div class="card-body p-5">
+                    <h3 class="mb-3" style="color: #34495e;">Welcome to the Library System</h3>
+                    <p class="lead" style="color: #555;">
+                        Our Library System is designed to provide an efficient and user-friendly platform for managing and accessing a vast collection of books. Whether you're an avid reader, a researcher, or an administrator, we've got you covered!
+                    </p>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Established in 2025, this system aims to digitize and streamline library operations, making it easier to browse, add, and manage books across various categories. With features like detailed statistics, dynamic charts, and user management, we ensure a seamless experience for all users.
+                    </p>
+
+                    <h4 class="mb-3 mt-3" style="color: #2c3e50;">Our Mission</h4>
+                    <p style="color: #666;">
+                        To foster a love for reading and learning by providing accessible resources and tools that enhance the library experience for everyone.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- الميزات في بطاقات -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-12">
+            <h2 class="text-center mb-4" style="color: #34495e; font-weight: larger;">Key Features</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; transition: transform 0.3s;">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-book fa-3x mb-3" style="color: #3498db;"></i>
+                            <h5 class="card-title" style="color: #2c3e50;">Extensive Book Collection</h5>
+                            <p class="card-text" style="color: #666;">Easily browse and manage a wide range of books with intuitive categorization.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; transition: transform 0.3s;">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-chart-line fa-3x mb-3" style="color: #e74c3c;"></i>
+                            <h5 class="card-title" style="color: #2c3e50;">Real-Time Statistics</h5>
+                            <p class="card-text" style="color: #666;">Gain insights with dynamic charts and up-to-date visualizations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; transition: transform 0.3s;">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-user-plus fa-3x mb-3" style="color: #2ecc71;"></i>
+                            <h5 class="card-title" style="color: #2c3e50;">Admin Tools</h5>
+                            <p class="card-text" style="color: #666;">Effortlessly add books and manage users with powerful admin features.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; transition: transform 0.3s;">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-download fa-3x mb-3" style="color: #f1c40f;"></i>
+                            <h5 class="card-title" style="color: #2c3e50;">Download Tracking</h5>
+                            <p class="card-text" style="color: #666;">Monitor downloads and user engagement with detailed analytics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <section class="contact-section pt-5 pb-5">
+            <h2 class="text-center" style="; color: #2c3e50;">Contact Us</h2>
+            <h5 class="mt-3 text-center mb-3" style="word-spacing: 2px; line-height: 35px;">
+                If you have a question or inquiry, do not hesitate to contact us and the team will respond to you.
+            </h5>
+        <div class="container">
+            <div class="">
+                <div class="">
+                    <form class="contact-form" action="{% url 'library:contact' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <textarea class="form-control" id="messageTextarea" rows="8" placeholder="Your message here" name="message" required></textarea>
+                        </div>
+                        <div class="text-left">
+                            <button type="submit" class="btn btn-success">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+</div>
+
+{% endblock %}

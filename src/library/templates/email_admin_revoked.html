@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Privileges Revoked</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #dc3545; /* لون أحمر للإشارة إلى الإلغاء */
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            padding-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        a{
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Admin Privileges Revoked</h2>
+        </div>
+        <div class="content">
+            <p>Dear {{ username }},</p>
+            <p>We regret to inform you that your admin privileges in the Library System have been revoked. You are now a regular user and will no longer have access to the admin dashboard or administrative functions.</p>
+            <p>This change was effective immediately. If you believe this action was taken in error or if you have any questions, please feel free to contact the system administrator.</p>
+            <p>Thank you for your understanding.</p>
+            <a href="mailto: {{admin_email}} " class="button">Contact Administrator</a>
+        </div>
+        <div class="footer">
+            <p>Best regards,<br>The Library System Team</p>
+            <p>&copy; {% now "Y" %} Library System. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

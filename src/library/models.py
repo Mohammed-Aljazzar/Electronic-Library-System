@@ -23,8 +23,7 @@ class Book(models.Model):
     STATUS = [
         ('draft', 'Draft'),
         ('published', 'Published'),
-        ('pending', 'Pending Approval'),
-        ('approved', 'Approved'),
+
     ]
 
     title = models.CharField(max_length=255, verbose_name="Title")

@@ -9,15 +9,15 @@
                 <li class="nav-item">
                     <a href="{% url 'library:home'%}" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">Blog</a>
-                </li>
+                
                 <li class="nav-item">
                     <a href="{% url 'library:books'%}" class="nav-link">Books</a>
                 </li>
+
                 <li class="nav-item">
-                    <a href="" class="nav-link">Authors</a>
+                    <a href="{% url 'library:about'%}" class="nav-link">About</a>
                 </li>
+                
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
@@ -27,6 +27,9 @@
                     </a>
                     <div class="dropdown-menu translate-x-50" aria-labelledby="navbarDropdownMenuLink" >
                         <a class="dropdown-item" href="{%url 'accounts:update_profile'%}">My Profile</a>
+                        {% if user.is_superuser %}
+                        <a class="dropdown-item" href="{% url 'library:admin_dashboard' %}">Dashboard</a>
+                        {% endif %}
                         <a class="dropdown-item" href="{%url 'accounts:password_change' %}">Change Password</a>
                         <a class="dropdown-item" href="{%url 'accounts:delete_account' %}">Delete account</a>
                         <a class="dropdown-item" href="{%url 'accounts:logout'%}">Logout</a>

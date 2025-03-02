@@ -1,0 +1,383 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-2">Dashboard</h2>
+
+    <!-- أزرار الإجراءات -->
+    <div class="mt-4 mb-4">
+        <a href="{% url 'library:add_book' %}" class="btn btn-primary btn-md me-1 my-1">Add New Book</a>
+        <a href="{% url 'library:add_category' %}" class="btn btn-success btn-md me-1 my-1">Add New Category</a>
+        <a href="{% url 'library:add_user' %}" class="btn btn-warning btn-md me-1 my-1">Add New User</a> <!-- زر جديد -->
+        <a href="{% url 'library:books' %}" class="btn btn-secondary btn-md me-1 my-1">View All Books</a>
+    </div>
+    
+    <!-- إحصائيات -->
+    <div class="row g-4 mb-5">
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-primary text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-book fa-2x mb-3"></i>
+                    <h5 class="card-title">Total Books</h5>
+                    <p class="card-text display-5 fw-bold">{{ total_books }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-success text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-list fa-2x mb-3"></i>
+                    <h5 class="card-title">Total Categories</h5>
+                    <p class="card-text display-5 fw-bold">{{ total_categories }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-info text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-comments fa-2x mb-3"></i>
+                    <h5 class="card-title">Total Comments</h5>
+                    <p class="card-text display-5 fw-bold">{{ total_comments }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-warning text-dark h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-eye fa-2x mb-3"></i>
+                    <h5 class="card-title">Total Views</h5>
+                    <p class="card-text display-5 fw-bold">{{ total_views }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-danger text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-download fa-2x mb-3"></i>
+                    <h5 class="card-title">Total Downloads</h5>
+                    <p class="card-text display-5 fw-bold">{{ total_downloads }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card shadow-sm text-center bg-secondary text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
+                <div class="card-body">
+                    <i class="fas fa-hourglass-half fa-2x mb-3"></i>
+                    <h5 class="card-title">Draft Books</h5>
+                    <p class="card-text display-5 fw-bold">{{ draft_books }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الرسم البياني الدائري للتصنيفات -->
+    <div class="row mt-5 mb-5">
+        <h3 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Charts</h3>
+        <div class="col-12 col-md-6 mb-2">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    {% if category_data %}
+                        <canvas id="categoryChart" style="width: 100%; max-height: 400px;"></canvas>
+                    {% else %}
+                        <p class="text-muted">No Categories Available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    {% if publish_data %}
+                        <canvas id="publishChart" style="width: 100%; min-height: 400px;"></canvas>
+                    {% else %}
+                        <p class="text-muted">No Publish Data Available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة المستخدمين -->
+    <div class="row mt-5 mb-5">
+        <div class="col-12">
+            <h3 class="mb-3">Users</h3>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Date Joined</th>
+                                    <th scope="col">Admin Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.date_joined|date:"Y-m-d H:i" }}</td>
+                                        <td>
+                                            {% if user.is_staff %}
+                                                <span class="badge bg-success">Admin</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">User</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'library:delete_user' user.id %}" class="btn btn-sm btn-danger me-2" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                            <a href="{% url 'library:toggle_user_status' user.id %}" class="btn btn-sm btn-info me-2">Change Status</a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No users found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة الكتب مع علامات تبويب -->
+    <div class="row mt-5 mb-5">
+        <div class="col-12">
+            <h3 class="mb-3">Books</h3>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="bookTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All Books</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="published-tab" data-bs-toggle="tab" data-bs-target="#published" type="button" role="tab" aria-controls="published" aria-selected="false">Published</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="draft-tab" data-bs-toggle="tab" data-bs-target="#draft" type="button" role="tab" aria-controls="draft" aria-selected="false">Draft</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3" id="bookTabsContent">
+                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Added Date</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for book in books %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ book.title }}</td>
+                                                <td>{{ book.author }}</td>
+                                                <td>
+                                                    {% if book.status == 'pending' %}
+                                                        <span class="badge bg-warning text-dark">Pending</span>
+                                                    {% elif book.status == 'approved' %}
+                                                        <span class="badge bg-success">Approved</span>
+                                                    {% elif book.status == 'published' %}
+                                                        <span class="badge bg-primary">Published</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary">Draft</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ book.publish_date|date:"Y-m-d" }}</td>
+                                                <td>
+                                                    <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                                    <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
+                                                    <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center">No books found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="published" role="tabpanel" aria-labelledby="published-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Added Date</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for book in books %}
+                                            {% if book.status == 'published' %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ book.title }}</td>
+                                                    <td>{{ book.author }}</td>
+                                                    <td><span class="badge bg-primary">Published</span></td>
+                                                    <td>{{ book.publish_date|date:"Y-m-d" }}</td>
+                                                    <td>
+                                                        <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                                        <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
+                                                        <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center">No published books found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="draft" role="tabpanel" aria-labelledby="draft-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Added Date</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for book in books %}
+                                            {% if book.status == 'draft' %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ book.title }}</td>
+                                                    <td>{{ book.author }}</td>
+                                                    <td><span class="badge bg-secondary">Draft</span></td>
+                                                    <td>{{ book.publish_date|date:"Y-m-d" }}</td>
+                                                    <td>
+                                                        <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
+                                                        <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
+                                                        <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center">No draft books found.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- تضمين Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // الرسم البياني الدائري للتصنيفات
+        const categoryData = {{ category_data|safe }};
+        const categoryLabels = categoryData.map(item => item.name);
+        const categoryValues = categoryData.map(item => item.book_count || 0);
+        const categoryTotal = categoryValues.reduce((sum, value) => sum + value, 0);
+
+        if (categoryTotal > 0) {
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(categoryCtx, {
+                type: 'pie',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        label: 'Books per Category',
+                        data: categoryValues,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#E7E9ED'],
+                        borderWidth: 1,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { size: 14 } } },
+                        title: { display: true, text: 'Distribution of books by publication date', font: { size: 18 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const value = tooltipItem.raw;
+                                    const percentage = ((value / categoryTotal) * 100).toFixed(1);
+                                    return `${tooltipItem.label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // الرسم البياني الخطي لتاريخ النشر
+        const publishData = {{ publish_data|safe }};
+        const publishLabels = publishData.map(item => item.date.slice(0, 7));
+        const publishValues = publishData.map(item => item.book_count || 0);
+        const publishTotal = publishValues.reduce((sum, value) => sum + value, 0);
+
+        if (publishTotal > 0) {
+            const publishCtx = document.getElementById('publishChart').getContext('2d');
+            new Chart(publishCtx, {
+                type: 'line',
+                data: {
+                    labels: publishLabels,
+                    datasets: [{
+                        label: 'Books Published Over Time',
+                        data: publishValues,
+                        borderColor: '#36A2EB',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#36A2EB',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#36A2EB'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Publish Date (Year-Month)' }, ticks: { autoSkip: true, maxTicksLimit: 10 } },
+                        y: { title: { display: true, text: 'Number of Books' }, beginAtZero: true }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { size: 14 } } },
+                        title: { display: true, text: 'Distribution of books by publication date', font: { size: 18 } }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

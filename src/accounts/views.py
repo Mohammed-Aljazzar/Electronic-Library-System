@@ -48,18 +48,24 @@ def signup_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = CustomLoginForm(request, data=request.POST)  # استخدام النموذج المخصص
+        form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             messages.success(request, "You have successfully logged in.")
-            return redirect('library:home')  # التوجيه إلى الصفحة الرئيسية
+            
+            # التحقق مما إذا كان المستخدم أدمن (is_staff أو is_superuser)
+            if user.is_staff or user.is_superuser:
+                return redirect('library:admin_dashboard')  # توجيه الأدمن إلى Dashboard
+            else:
+                return redirect('library:home')  # توجيه المستخدم العادي إلى الصفحة الرئيسية
         else:
             messages.error(request, "Invalid username or password")
     else:
-        form = CustomLoginForm()  # استخدام النموذج المخصص
+        form = CustomLoginForm()
 
     return render(request, 'login.html', {'form': form})
+
 
 @login_required
 def update_profile(request):

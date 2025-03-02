@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add New Book{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2>Add New Book</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Add Book</button>
+        <a href="{% url 'library:books' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

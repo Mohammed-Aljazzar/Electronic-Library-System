@@ -55,15 +55,22 @@
           <li class="breadcrumb-item active" aria-current="page">Books</li>
         </ol>
     </nav>
-    
+    <!-- أزرار للأدمن فقط -->
+    {% if user.is_staff %}
+        <div class="mb-3">
+            <a href="{% url 'library:add_book' %}" class="btn btn-primary me-2 btn-sm">Add New Book</a>
+            <a href="{% url 'library:add_category' %}" class="btn btn-success btn-sm">Add New Category</a>
+        </div>
+    {% endif %}
+
     <div class="row">
         <!-- عمود الكتب (العمود الأيسر) -->
         <div class="col-md-9">
             <div class="row">
-                {% if books %}
+                {% if books or book.status == 'published'  %}
                     
                     {% for book in books %}
-                        {% if book.status == 'approved' or book.status == 'published' %}
+                        {% if book.status == 'published' %}
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-4"> <!-- 3 أعمدة للشاشات الكبيرة، عمودين للشاشات المتوسطة، وعمود واحد للشاشات الصغيرة -->
                                 <a href="{% url 'library:book_detail' book.id %}" class="text-decoration-none text-dark">
                                     <div class="card h-100 shadow">
@@ -195,11 +202,16 @@
                             <label for="rating" class="form-label">Minimum Rating</label>
                             <select class="form-select" id="rating" name="rating">
                                 <option value="">All Ratings</option>
-                                <option value="1" {% if selected_rating == "1" %}selected{% endif %}>1 Star & Up</option>
-                                <option value="2" {% if selected_rating == "2" %}selected{% endif %}>2 Stars & Up</option>
-                                <option value="3" {% if selected_rating == "3" %}selected{% endif %}>3 Stars & Up</option>
-                                <option value="4" {% if selected_rating == "4" %}selected{% endif %}>4 Stars & Up</option>
-                                <option value="5" {% if selected_rating == "5" %}selected{% endif %}>5 Stars</option>
+                                <option value="0.5" {% if selected_rating == "0.5" %}selected{% endif %}>0.5 Stars & Up</option>
+                                <option value="1.0" {% if selected_rating == "1.0" %}selected{% endif %}>1 Star & Up</option>
+                                <option value="1.5" {% if selected_rating == "1.5" %}selected{% endif %}>1.5 Stars & Up</option>
+                                <option value="2.0" {% if selected_rating == "2.0" %}selected{% endif %}>2 Stars & Up</option>
+                                <option value="2.5" {% if selected_rating == "2.5" %}selected{% endif %}>2.5 Stars & Up</option>
+                                <option value="3.0" {% if selected_rating == "3.0" %}selected{% endif %}>3 Stars & Up</option>
+                                <option value="3.5" {% if selected_rating == "3.5" %}selected{% endif %}>3.5 Stars & Up</option>
+                                <option value="4.0" {% if selected_rating == "4.0" %}selected{% endif %}>4 Stars & Up</option>
+                                <option value="4.5" {% if selected_rating == "4.5" %}selected{% endif %}>4.5 Stars & Up</option>
+                                <option value="5.0" {% if selected_rating == "5.0" %}selected{% endif %}>5 Stars</option>
                             </select>
                         </div>
             
