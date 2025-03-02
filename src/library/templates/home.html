@@ -287,6 +287,7 @@ footer {
     padding: 50px 0;
     background: linear-gradient(to bottom, #f8f9fa 0%, #fff 100%);
     border-bottom:2px solid #56cc9d;
+    linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .testimonials-section h2 {
@@ -309,6 +310,7 @@ footer {
     position: relative;
     overflow: hidden;
     margin-bottom:50px;
+    background:#fff
 }
 
 .testimonial-card img {
@@ -469,38 +471,6 @@ footer {
         </div>
     </section>
 
-    <!-- قسم Testimonials -->
-    {% comment %} <section class="testimonials-section">
-        <div class="container">
-            <h2 class="text-center">Testimonials</h2>
-            <div class="row justify-content-center">
-                {% if top_comments %}
-                    {% for comment in top_comments %}
-                    <div class="col-md-4 mb-4">
-                        <div class="testimonial-card">
-                            <img src="{{ comment.user.profile_picture.url|default:'/static/img/default_user.png' }}" alt="{{ comment.user.username }}" class="img-fluid">
-                            <p class="comment-author text-center">{{ comment.user.username }}</p>
-                            <p class="comment-text text-center">{{ comment.text|truncatewords:20 }}</p>
-                            <div class="comment-rating text-center">
-                                {% for i in "12345" %}
-                                    {% if forloop.counter <= comment.rating %}
-                                        <span class="rating-filled">★</span>
-                                    {% else %}
-                                        <span class="rating-empty">☆</span>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="col-12 text-center">
-                        <p class="text-muted">No testimonials available yet.</p>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </section> {% endcomment %}
 
     <section class="quote-section pt-3">
         <div class="container">
@@ -589,7 +559,7 @@ footer {
     </section>
 
 
-    <section class="contact-section pt-5 pb-5" id="contact_us">
+    <section class="contact-section pt-5 pb-5 " id="contact_us">
         <div class="">
             <h2 class="text-center" style="font-size: 28px; font-weight: 900; font-weight: bold;">Contact Us</h2>
             <h5 class="mt-3 text-center mb-3" style="word-spacing: 2px; line-height: 35px;">

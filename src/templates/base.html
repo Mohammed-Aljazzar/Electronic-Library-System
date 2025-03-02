@@ -15,7 +15,7 @@
             list-style: none;
             padding: 0;
             position: absolute; 
-            top: 60px;
+            top: 30px;
             left: 50%; 
             width: 80%; 
             transform:translateX(-50%);
@@ -139,7 +139,7 @@
     {%endblock%}
     
     <div class="">
-        <div class="d-flex rounded align-items-center container">
+        <div class="d-flex rounded align-items-center container" style="position: sticky; top: 40px; z-index: 9999;">
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
