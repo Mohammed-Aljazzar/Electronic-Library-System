@@ -57,7 +57,7 @@ The Electronic Library System is designed to digitize and streamline library ope
 ### Steps
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/electronic-library-system.git
+   git clone https://github.com/Mohammed-Aljazzar/electronic-library-system.git
    cd electronic-library-system
    ```
 
