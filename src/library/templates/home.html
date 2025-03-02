@@ -17,6 +17,7 @@
         transform: translateX(-70%);
     }
 }
+
 footer {
     background-color: #1e1e24;
     color: #fff;
@@ -285,6 +286,7 @@ footer {
 .testimonials-section {
     padding: 50px 0;
     background: linear-gradient(to bottom, #f8f9fa 0%, #fff 100%);
+    border-bottom:2px solid #56cc9d;
 }
 
 .testimonials-section h2 {
@@ -306,11 +308,7 @@ footer {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    margin-bottom:50px;
 }
 
 .testimonial-card img {
@@ -343,6 +341,13 @@ footer {
     font-size: 1rem;
     color: #f1c40f;
 }
+@media (max-width: 768px) {
+    .carousel-control-prev, .carousel-control-next{
+        opacity:0
+    }
+
+}
+
 {% endblock %}
 
 {% block content %}
@@ -465,7 +470,7 @@ footer {
     </section>
 
     <!-- قسم Testimonials -->
-    <section class="testimonials-section">
+    {% comment %} <section class="testimonials-section">
         <div class="container">
             <h2 class="text-center">Testimonials</h2>
             <div class="row justify-content-center">
@@ -495,7 +500,7 @@ footer {
                 {% endif %}
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
 
     <section class="quote-section pt-3">
         <div class="container">
@@ -517,8 +522,74 @@ footer {
             </div>
         </div>
     </section>
+    
+    
 
-    <section class="contact-section pt-5 pb-5">
+    <!-- قسم Testimonials ككاروسيل للشاشات الكبيرة -->
+    <section class="testimonials-section">
+        <div class="container" >
+            <h2 class="text-center">Testimonials</h2>
+
+            <!-- الكاروسيل للشاشات الكبيرة -->
+            <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" >
+                <div class="carousel-inner">
+                    {% if top_comments %}
+                        {% for comment in top_comments %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="testimonial-card">
+                                        <img src="{{ comment.user.profile_picture.url|default:'/static/img/default_user.png' }}" alt="{{ comment.user.username }}" class="img-fluid">
+                                        <p class="comment-author text-center">{{ comment.user.username }}</p>
+                                        <p class="comment-text text-center">"{{ comment.text|truncatewords:20 }}"</p>
+                                        <div class="comment-rating text-center">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= comment.rating %}
+                                                    <span class="rating-filled">★</span>
+                                                {% else %}
+                                                    <span class="rating-empty">☆</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 text-center">
+                                    <p class="text-muted">No testimonials available yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- أزرار التحكم -->
+                <button class="carousel-control-prev" style="color: black;" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="prev">
+                    <div style="background-color: #56cc9d;border-radius: 50%; display: flex; justify-content: center;padding: 5px;" >
+
+                        <span class="carousel-control-prev-icon text-dark " aria-hidden="true"></span>
+                    </div >
+
+                    <span class="visually-hidden" style="color: black;">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="next">
+                    <div style=" background-color: #56cc9d; border-radius: 50%; display: flex; justify-content: center;padding: 5px;" >
+
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </div>
+                    <span class="visually-hidden ">Next</span>
+                </button>
+            </div>
+
+        
+        </div>
+    </section>
+
+
+    <section class="contact-section pt-5 pb-5" id="contact_us">
         <div class="">
             <h2 class="text-center" style="font-size: 28px; font-weight: 900; font-weight: bold;">Contact Us</h2>
             <h5 class="mt-3 text-center mb-3" style="word-spacing: 2px; line-height: 35px;">

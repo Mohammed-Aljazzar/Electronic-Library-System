@@ -30,7 +30,7 @@
                             <div class="mb-3 mt-5 col-12 col-lg-6">
                                 <!-- عرض الصورة الحالية -->
                                 {% if form.instance.profile_picture %}
-                                    <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px; max-height: 200px;">
+                                    <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 180px; height: 180px;">
                                 {% else %}
                                     <p>No profile picture available.</p>
                                 {% endif %}
