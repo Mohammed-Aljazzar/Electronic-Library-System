@@ -2,8 +2,6 @@ from django.contrib import admin
 from django.utils.html import format_html
 from library.models import Book, Category, Comment
 
-admin.site.register(Category)
-admin.site.register(Comment)
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -30,3 +28,14 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('views_count', 'download_count')
         }),
     )
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ('name',)
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('book', 'user', 'rating', 'created_at')
+    search_fields = ('book__title', 'user__username')
+    list_filter = ('rating', 'created_at')
