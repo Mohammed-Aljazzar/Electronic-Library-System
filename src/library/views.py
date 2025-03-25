@@ -18,6 +18,7 @@ from .forms import BookForm, CategoryForm
 from accounts.models import CustomUser
 from django.template.loader import render_to_string
 from accounts.forms import UserSignupForm
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 def home(request):
@@ -262,9 +263,11 @@ def all_comments(request, book_id):
     return render(request, 'all_comments.html', {'book': book, 'comments': page_obj})
 
 
-
 @staff_member_required
 def add_book(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("Only superusers can add books.")
+    
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():

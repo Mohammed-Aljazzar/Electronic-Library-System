@@ -9,6 +9,9 @@ class BookAdmin(admin.ModelAdmin):
     list_display_links = ('title', 'author')
     readonly_fields = ('views_count', 'download_count')
 
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
     def display_image(self, obj):
         return format_html('<img src="{}" width="50" height="75" />', obj.poster_image.url)
 
