@@ -1,14 +1,12 @@
 import os
 import django
-from django.core.files import File
 from django.utils import timezone
 from datetime import date
-import random
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from decouple import config
 
-# Set up Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
 django.setup()
 
@@ -17,29 +15,42 @@ from library.models import Category, Book, Comment
 
 # Configure Cloudinary
 cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dpthr5ymy'),
-    api_key=os.getenv('CLOUDINARY_API_KEY', '671232771225394'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'XQY5dqF9zi1fj6yChAScg_59888')
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET')
 )
 
-def create_file(filename, content="Dummy content"):
-    """Create a file (dummy or real) for uploading to Cloudinary."""
-    # Check if a real file exists in temp_media
+def create_file(filename, is_image=True):
     temp_path = os.path.join('temp_media', filename)
+    print(f"Checking file: {temp_path}")
     if os.path.exists(temp_path):
+        print(f"Using existing file: {temp_path}")
         return open(temp_path, 'rb')
-    # Otherwise, create a dummy file
-    with open(filename, 'w') as f:
-        f.write(content)
-    return open(filename, 'rb')
+    os.makedirs(os.path.dirname(temp_path), exist_ok=True)
+    if is_image:
+        from io import BytesIO
+        from PIL import Image
+        img = Image.new('RGB', (1, 1), color='black')
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        with open(temp_path, 'wb') as f:
+            f.write(buffer.getvalue())
+        buffer.close()
+        print(f"Created dummy image: {temp_path}")
+    else:
+        with open(temp_path, 'w') as f:
+            f.write("Dummy PDF content")
+        print(f"Created dummy PDF: {temp_path}")
+    return open(temp_path, 'rb')
 
 def populate():
     # 1. Create a superuser
     try:
-        # Create or use a profile picture file
-        profile_picture_file = create_file('profile_pictures/admin_profile.jpg')
+        profile_picture_file = create_file('profile_pictures/admin_profile.jpg', is_image=True)
+        print("Uploading admin profile picture...")
         profile_picture_response = cloudinary.uploader.upload(profile_picture_file, resource_type="image")
-        
+        print(f"Uploaded admin profile picture: {profile_picture_response['url']}") 
+       
         superuser = CustomUser.objects.create_superuser(
             username='admin',
             email='admin@example.com',
@@ -59,6 +70,7 @@ def populate():
         profile_picture_file.close()
         if not os.path.exists(os.path.join('temp_media', 'profile_pictures/admin_profile.jpg')):
             os.remove(profile_picture_file.name)
+    
     except Exception as e:
         print(f"Error creating superuser: {e}")
         return  # Exit if superuser creation fails
@@ -97,8 +109,10 @@ def populate():
     for user_data in users_data:
         try:
             # Create or use a profile picture file
-            profile_picture_file = create_file(user_data['profile_picture'])
+            profile_picture_file = create_file(user_data['profile_picture'], is_image=True)
+            print(f"Uploading profile picture for {user_data['username']}...")
             profile_picture_response = cloudinary.uploader.upload(profile_picture_file, resource_type="image")
+            print(f"Uploaded profile picture for {user_data['username']}: {profile_picture_response['url']}")
 
             user, created = CustomUser.objects.get_or_create(
                 username=user_data['username'],

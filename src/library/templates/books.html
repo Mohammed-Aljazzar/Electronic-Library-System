@@ -74,7 +74,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-4"> <!-- 3 أعمدة للشاشات الكبيرة، عمودين للشاشات المتوسطة، وعمود واحد للشاشات الصغيرة -->
                                 <a href="{% url 'library:book_detail' book.id %}" class="text-decoration-none text-dark">
                                     <div class="card h-100 shadow">
-                                        <img src="{{ book.poster_image.url }}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
+                                        <img src="{{ book.poster_image}}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ book.title }}</h5>
                                             <p class="card-text">

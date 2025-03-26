@@ -395,7 +395,7 @@ footer {
                 <div class="col-12 col-lg-4 mb-4">
                     <a href="{% url 'library:book_detail' item.book.id %}" style="text-decoration: none;">
                         <div class="card book-card h-100">
-                            <img src="{{ item.book.poster_image.url }}" class="card-img-top" alt="{{ item.book.title }}">
+                            <img src="{{ item.book.poster_image }}" class="card-img-top" alt="{{ item.book.title }}">
                             <div class="card-body">
                                 <div style="display: flex; justify-content: space-between;">
                                     <h5 class="card-title">{{ item.book.title }}</h5>
@@ -446,7 +446,7 @@ footer {
                     <div class="card featured-book-card">
                         <div class="row g-0">
                             <div class="col-12 col-md-4">
-                                <img src="{{ featured_book.poster_image.url }}" class="img-fluid" style="width: 100%;" alt="{{ featured_book.title }}">
+                                <img src="{{ featured_book.poster_image }}" class="img-fluid" style="width: 100%;" alt="{{ featured_book.title }}">
                             </div>
                             <div class="col-12 col-md-8" style="position: relative;">
                                 <div class="card-body">
@@ -509,7 +509,7 @@ footer {
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
                                     <div class="testimonial-card">
-                                        <img src="{{ comment.user.profile_picture.url|default:'/static/img/default_user.png' }}" alt="{{ comment.user.username }}" class="img-fluid">
+                                        <img src="{{ comment.user.profile_picture|default:'/static/img/default_user.png' }}" alt="{{ comment.user.username }}" class="img-fluid">
                                         <p class="comment-author text-center">{{ comment.user.username }}</p>
                                         <p class="comment-text text-center">"{{ comment.text|truncatewords:20 }}"</p>
                                         <div class="comment-rating text-center">
