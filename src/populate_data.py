@@ -164,7 +164,6 @@ def populate():
             'description': 'R for Data Science, written by Hadley Wickham and Garrett Grolemund...',
             'author': 'Hadley Wickham and Garrett Grolemund',
             'category': categories[0],  # Technology
-            'book_file': 'books/files/great_novel.pdf',
             'link': 'https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview',
             'poster_image': 'books/posters/r_for_data_science.png',
             'publish_date': date(2020, 1, 15),
@@ -181,7 +180,6 @@ def populate():
             'description': '"The Science in Social Science" explores scientific methods in social sciences...',
             'author': 'Princeton University Press',
             'category': categories[2],  # Science
-            'book_file': 'books/files/science_unveiled.pdf',
             'link': 'https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview',
             'poster_image': 'books/posters/science.png',
             'publish_date': date(2021, 6, 10),
@@ -198,7 +196,6 @@ def populate():
             'description': 'The ultimate aim of history is human self-knowledge...',
             'author': 'Alexandra Beeden, Sam Kennedy',
             'category': categories[1],  # History
-            'book_file': 'books/files/history_world.pdf',
             'link': 'https://example.com/history_world',
             'poster_image': 'books/posters/history-book.png',
             'publish_date': date(2019, 3, 22),
@@ -214,11 +211,8 @@ def populate():
 
     books = []
     for book_data in books_data:
-        # Create or use files and upload to Cloudinary
-        book_file = create_file(book_data['book_file'])
+        # رفع صورة الغلاف فقط
         poster_image = create_file(book_data['poster_image'])
-
-        book_file_response = cloudinary.uploader.upload(book_file, resource_type="auto")
         poster_image_response = cloudinary.uploader.upload(poster_image, resource_type="image")
 
         book = Book.objects.create(
@@ -226,9 +220,8 @@ def populate():
             description=book_data['description'],
             author=book_data['author'],
             category=book_data['category'],
-            book_file=book_file_response['url'],  # Use Cloudinary URL
             link=book_data['link'],
-            poster_image=poster_image_response['url'],  # Use Cloudinary URL
+            poster_image=poster_image_response['url'],
             publish_date=book_data['publish_date'],
             added_by=book_data['added_by'],
             total_pages=book_data['total_pages'],
@@ -238,14 +231,13 @@ def populate():
             quote=book_data['quote'],
             download_count=book_data['download_count']
         )
+
         books.append(book)
         print(f"Book '{book.title}' created successfully.")
 
         # Clean up files
-        book_file.close()
         poster_image.close()
-        if not os.path.exists(os.path.join('temp_media', book_data['book_file'])):
-            os.remove(book_file.name)
+
         if not os.path.exists(os.path.join('temp_media', book_data['poster_image'])):
             os.remove(poster_image.name)
 

@@ -4,7 +4,7 @@ from .models import Book, Category
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'description', 'author', 'category', 'book_file', 'link', 'poster_image', 'publish_date', 'total_pages', 'language', 'status']
+        fields = ['title', 'description', 'author', 'category', 'link', 'poster_image', 'publish_date', 'total_pages', 'language', 'status']
 
 
 class BookRequestForm(forms.ModelForm):
@@ -12,7 +12,7 @@ class BookRequestForm(forms.ModelForm):
         model = Book
         fields = ['title', 'description', 'author', 'category', 'language', 'total_pages']  # Include fields you want in the form
         # Optionally exclude fields that should be set by the system:
-        exclude = ['book_file', 'link', 'poster_image', 'publish_date', 'added_by', 'rating', 'reviews_count', 'status', 'views_count']
+        exclude = [ 'link', 'poster_image', 'publish_date', 'added_by', 'rating', 'reviews_count', 'status', 'views_count']
 
     # If you need custom validation or additional fields, you can add them here
     # For instance, if you want to customize a field:
@@ -23,7 +23,7 @@ class BookRequestForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'description', 'author', 'category', 'book_file', 'link', 'poster_image', 'publish_date', 'total_pages', 'language', 'status', 'quote']
+        fields = ['title', 'description', 'author', 'category', 'link', 'poster_image', 'publish_date', 'total_pages', 'language', 'status', 'quote']
         widgets = {
             'publish_date': forms.DateInput(attrs={'type': 'date'}),
             'description': forms.Textarea(attrs={'rows': 4}),

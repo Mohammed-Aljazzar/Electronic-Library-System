@@ -190,12 +190,12 @@ def download_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     book.download_count += 1
     book.save()
-    file_path = book.book_file.path
-    if os.path.exists(file_path):
-        return FileResponse(open(file_path, 'rb'), as_attachment=True, filename=os.path.basename(file_path))
+    if book.link:
+        return redirect(book.link)  # إعادة توجيه إلى الرابط الخارجي
     else:
-        messages.error(request, "File not found.")
+        messages.error(request, "No link available for this book.")
         return redirect('library:book_detail', book_id=book.id)
+    
 
 @login_required
 def search_results(request):
@@ -220,7 +220,7 @@ def search_results(request):
     context = {
         'books': books,
         'current_category': category if category else 'All',
-        'search_term': search_term
+        'search_term': search_term,
     }
     return render(request, 'search_results.html', context)
 
