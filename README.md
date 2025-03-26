@@ -4,6 +4,7 @@ Welcome to the **Electronic Library System**, a modern web-based platform built 
 
 ## Table of Contents
 - [Overview](#overview)
+- [Demo](#demo)
 - [Features](#features)
 - [Technologies](#technologies)
 - [Installation](#installation)
@@ -14,6 +15,9 @@ Welcome to the **Electronic Library System**, a modern web-based platform built 
 
 ## Overview
 The Electronic Library System is designed to digitize and streamline library operations. It provides a user-friendly interface for browsing books, adding new content, tracking user engagement, and managing library resources. Established in 2025, this project aims to foster a love for reading and learning by offering accessible tools and resources.
+
+## Demo
+Check out the live demo of the Electronic Library System here: [Live Demo](https://electronic-library-system.onrender.com/)
 
 ## Features
 ### General Features
