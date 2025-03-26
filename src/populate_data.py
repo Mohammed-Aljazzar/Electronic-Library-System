@@ -4,6 +4,9 @@ from django.core.files import File
 from django.utils import timezone
 from datetime import date
 import random
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Set up Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
@@ -12,8 +15,20 @@ django.setup()
 from accounts.models import CustomUser
 from library.models import Category, Book, Comment
 
-def create_dummy_file(filename, content="Dummy content"):
-    """Create a dummy file for book_file and poster_image."""
+# Configure Cloudinary
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dpthr5ymy'),
+    api_key=os.getenv('CLOUDINARY_API_KEY', '671232771225394'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'XQY5dqF9zi1fj6yChAScg_59888')
+)
+
+def create_file(filename, content="Dummy content"):
+    """Create a file (dummy or real) for uploading to Cloudinary."""
+    # Check if a real file exists in temp_media
+    temp_path = os.path.join('temp_media', filename)
+    if os.path.exists(temp_path):
+        return open(temp_path, 'rb')
+    # Otherwise, create a dummy file
     with open(filename, 'w') as f:
         f.write(content)
     return open(filename, 'rb')
@@ -21,20 +36,29 @@ def create_dummy_file(filename, content="Dummy content"):
 def populate():
     # 1. Create a superuser
     try:
+        # Create or use a profile picture file
+        profile_picture_file = create_file('profile_pictures/admin_profile.jpg')
+        profile_picture_response = cloudinary.uploader.upload(profile_picture_file, resource_type="image")
+        
         superuser = CustomUser.objects.create_superuser(
             username='admin',
             email='admin@example.com',
-            password='123',
+            password='Admin@123!',  # Stronger password
             address='123 Admin St',
             profession='Administrator',
             residence='Admin City',
             phone_number='1234567890',
             country_code='+1',
             gender='M',
-            profile_picture='profile_pictures/1.jpg',
+            profile_picture=profile_picture_response['url'],  # Use Cloudinary URL
             can_add_books=True  # Superuser can add books
         )
         print("Superuser 'admin' created successfully.")
+        
+        # Clean up file
+        profile_picture_file.close()
+        if not os.path.exists(os.path.join('temp_media', 'profile_pictures/admin_profile.jpg')):
+            os.remove(profile_picture_file.name)
     except Exception as e:
         print(f"Error creating superuser: {e}")
         return  # Exit if superuser creation fails
@@ -72,6 +96,10 @@ def populate():
     users = []
     for user_data in users_data:
         try:
+            # Create or use a profile picture file
+            profile_picture_file = create_file(user_data['profile_picture'])
+            profile_picture_response = cloudinary.uploader.upload(profile_picture_file, resource_type="image")
+
             user, created = CustomUser.objects.get_or_create(
                 username=user_data['username'],
                 defaults={
@@ -82,7 +110,7 @@ def populate():
                     'phone_number': user_data['phone_number'],
                     'country_code': user_data['country_code'],
                     'gender': user_data['gender'],
-                    'profile_picture': user_data['profile_picture'],
+                    'profile_picture': profile_picture_response['url'],  # Use Cloudinary URL
                     'can_add_books': user_data['can_add_books']
                 }
             )
@@ -91,6 +119,11 @@ def populate():
                 user.save()
             users.append(user)
             print(f"User '{user.username}' created successfully.")
+
+            # Clean up file
+            profile_picture_file.close()
+            if not os.path.exists(os.path.join('temp_media', user_data['profile_picture'])):
+                os.remove(profile_picture_file.name)
         except Exception as e:
             print(f"Error creating user {user_data['username']}: {e}")
 
@@ -119,7 +152,7 @@ def populate():
             'category': categories[0],  # Technology
             'book_file': 'books/files/great_novel.pdf',
             'link': 'https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview',
-            'poster_image': 'books/posters/r for data science.png',
+            'poster_image': 'books/posters/r_for_data_science.png',
             'publish_date': date(2020, 1, 15),
             'added_by': superuser,  # Only superuser adds books
             'total_pages': 520,
@@ -167,17 +200,21 @@ def populate():
 
     books = []
     for book_data in books_data:
-        book_file = create_dummy_file(book_data['book_file'].split('/')[-1])
-        poster_image = create_dummy_file(book_data['poster_image'].split('/')[-1])
+        # Create or use files and upload to Cloudinary
+        book_file = create_file(book_data['book_file'])
+        poster_image = create_file(book_data['poster_image'])
+
+        book_file_response = cloudinary.uploader.upload(book_file, resource_type="auto")
+        poster_image_response = cloudinary.uploader.upload(poster_image, resource_type="image")
 
         book = Book.objects.create(
             title=book_data['title'],
             description=book_data['description'],
             author=book_data['author'],
             category=book_data['category'],
-            book_file=File(book_file, name=book_data['book_file'].split('/')[-1]),
+            book_file=book_file_response['url'],  # Use Cloudinary URL
             link=book_data['link'],
-            poster_image=File(poster_image, name=book_data['poster_image'].split('/')[-1]),
+            poster_image=poster_image_response['url'],  # Use Cloudinary URL
             publish_date=book_data['publish_date'],
             added_by=book_data['added_by'],
             total_pages=book_data['total_pages'],
@@ -190,11 +227,13 @@ def populate():
         books.append(book)
         print(f"Book '{book.title}' created successfully.")
 
-        # Clean up dummy files
+        # Clean up files
         book_file.close()
         poster_image.close()
-        os.remove(book_file.name)
-        os.remove(poster_image.name)
+        if not os.path.exists(os.path.join('temp_media', book_data['book_file'])):
+            os.remove(book_file.name)
+        if not os.path.exists(os.path.join('temp_media', book_data['poster_image'])):
+            os.remove(poster_image.name)
 
     # 5. Create comments (users can still comment, just not add books)
     comments_data = [

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'library',
     'crispy_forms',
     'crispy_bootstrap5',
+    'cloudinary',  # Add this
+    'cloudinary_storage',  # Add this
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -142,15 +144,27 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'dpthr5ymy'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '671232771225394'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'XQY5dqF9zi1fj6yChAScg_59888'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
