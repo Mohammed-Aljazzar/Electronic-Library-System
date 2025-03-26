@@ -99,7 +99,7 @@
             <div class="col-12">
                 <h2 class="mb-3">Read the Book</h2>
                 <div class="book-reader">
-                    <p>Debug URL: {{ book.link }}</p>
+                    {% comment %} <p>Debug URL: {{ book.link }}</p> {% endcomment %}
                     {% if book.link %}
                         <iframe src="{{ book.link }}" frameborder="0"></iframe>
                     {% else %}
