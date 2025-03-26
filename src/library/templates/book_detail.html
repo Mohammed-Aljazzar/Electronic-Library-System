@@ -107,9 +107,12 @@
                     {% endif %}
                 </div>
                 <div class="text-center my-3">
-
                     <p class="" style="font-size: 20px; font-weight:large;">Number of downloads: {{ book.download_count }}</p>
-                    <a href="{% url 'library:download_book' book.id %}" class="btn  btn-primary btn-lg">Download</a>
+                    {% if book.link %}
+                        <a href="{% url 'library:download_book' book.id %}" class="btn btn-primary btn-lg">Download</a>
+                    {% else %}
+                        <p>No download link available.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

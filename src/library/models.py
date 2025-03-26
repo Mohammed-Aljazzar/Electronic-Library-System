@@ -30,7 +30,6 @@ class Book(models.Model):
     description = models.TextField(verbose_name="Brief Description")
     author = models.CharField(max_length=255, verbose_name="Author")
     category = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name="Category", related_name="categories")  # تعديل هنا
-    # book_file = models.FileField(upload_to='books/files/', verbose_name="Book File")
     link = models.URLField(blank=True, null=True, verbose_name="Link")
     poster_image = models.ImageField(upload_to='books/posters/', verbose_name="Poster Image")
     publish_date = models.DateField(verbose_name="Publish Date")

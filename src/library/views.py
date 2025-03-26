@@ -19,7 +19,8 @@ from accounts.models import CustomUser
 from django.template.loader import render_to_string
 from accounts.forms import UserSignupForm
 from django.http import HttpResponseForbidden
-
+import requests
+from io import BytesIO
 # Create your views here.
 def home(request):
     books = Book.objects.all()
@@ -185,17 +186,42 @@ def book_detail(request, book_id):
 
 
 
+# @login_required
+# def download_book(request, book_id):
+#     book = get_object_or_404(Book, id=book_id)
+#     book.download_count += 1
+#     book.save()
+#     if book.link:
+#         return redirect(book.link)  # إعادة توجيه إلى الرابط الخارجي
+#     else:
+#         messages.error(request, "No link available for this book.")
+#         return redirect('library:book_detail', book_id=book.id)
+
 @login_required
 def download_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     book.download_count += 1
     book.save()
+    
     if book.link:
-        return redirect(book.link)  # إعادة توجيه إلى الرابط الخارجي
+        try:
+            # جلب الملف من الرابط
+            response = requests.get(book.link, stream=True)
+            response.raise_for_status()  # التحقق من نجاح الطلب
+            
+            # استخراج اسم الملف من الرابط أو تعيين اسم افتراضي
+            filename = book.title.replace(" ", "_") + ".pdf"  # افتراض أنه PDF
+            content_type = response.headers.get('Content-Type', 'application/pdf')
+            
+            # تحويل المحتوى إلى BytesIO لتقديمه كاستجابة
+            file_buffer = BytesIO(response.content)
+            return FileResponse(file_buffer, as_attachment=True, filename=filename, content_type=content_type)
+        except requests.RequestException as e:
+            messages.error(request, f"Failed to download the book: {str(e)}")
+            return redirect('library:book_detail', book_id=book.id)
     else:
         messages.error(request, "No link available for this book.")
         return redirect('library:book_detail', book_id=book.id)
-    
 
 @login_required
 def search_results(request):
