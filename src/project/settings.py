@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 import dj_database_url
-import os
 import cloudinary  # Import cloudinary to initialize it
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -153,17 +153,31 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+#     'API_KEY': config('CLOUDINARY_API_KEY'),
+#     'API_SECRET': config('CLOUDINARY_API_SECRET'),
+# }
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# cloudinary.config(
+#     cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+#     api_key=config('CLOUDINARY_API_KEY'),
+#     api_secret=config('CLOUDINARY_API_SECRET')
+# )
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'dpthr5ymy'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '671232771225394'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'XQY5dqF9zi1fj6yChAScg_59888'),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+# تهيئة Cloudinary يدويًا
 cloudinary.config(
-    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
-    api_key=config('CLOUDINARY_API_KEY'),
-    api_secret=config('CLOUDINARY_API_SECRET')
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dpthr5ymy'),
+    api_key=os.getenv('CLOUDINARY_API_KEY', '671232771225394'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'XQY5dqF9zi1fj6yChAScg_59888')
 )
 
 # MEDIA_URL = '/media/'
@@ -185,7 +199,19 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') 
 
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
 
 # CACHES = {
 #     'default': {

@@ -12,7 +12,11 @@ from .forms import CustomLoginForm  # استيراد النموذج المخصص
 from .utils import send_welcome_email  # استيراد الوظيفة
 import cloudinary
 import cloudinary.uploader
+import logging
 
+
+
+logger = logging.getLogger(__name__)
 # def signup_view(request):
 #     if request.method == "POST":
 #         form = UserSignupForm(request.POST, request.FILES)
@@ -41,12 +45,16 @@ def signup_view(request):
             user.set_password(form.cleaned_data['password'])
             
             if 'profile_picture' in request.FILES:
-                upload_result = cloudinary.uploader.upload(
-                    request.FILES['profile_picture'],
-                    folder='profile_pictures/',
-                    resource_type='image'
-                )
-                user.profile_picture = upload_result['secure_url']
+                try:
+                    upload_result = cloudinary.uploader.upload(
+                        request.FILES['profile_picture'],
+                        folder='profile_pictures/',
+                        resource_type='image'
+                    )
+                    user.profile_picture = upload_result['secure_url']
+                except Exception as e:
+                    messages.error(request, "Failed to upload profile picture. Please try again.")
+                    return redirect('accounts:signup_view')
             
             user.save()
             login(request, user)
@@ -54,7 +62,6 @@ def signup_view(request):
             send_welcome_email(user.email, user.username)
             return redirect('library:home')
         else:
-            print(form.errors)
             messages.error(request, "An error occurred in the form. Check the data.")
     else:
         form = UserSignupForm()
@@ -119,7 +126,6 @@ def update_profile(request):
             
             if 'profile_picture' in request.FILES:
                 try:
-                    print(f"Uploading profile picture: {request.FILES['profile_picture'].name}")  # تصحيح
                     upload_result = cloudinary.uploader.upload(
                         request.FILES['profile_picture'],
                         folder='profile_pictures/',
@@ -128,17 +134,14 @@ def update_profile(request):
                         invalidate=True
                     )
                     user.profile_picture = upload_result['secure_url']
-                    print(f"Uploaded URL: {upload_result['secure_url']}")  # تصحيح
                 except Exception as e:
-                    print(f"Error uploading to Cloudinary: {str(e)}")  # التقاط الخطأ
-                    messages.error(request, f"Error uploading image: {str(e)}")
+                    messages.error(request, "Failed to upload profile picture. Please try again.")
                     return redirect('accounts:update_profile')
             
             user.save()
             messages.success(request, "Profile updated successfully")
             return redirect('accounts:update_profile')
         else:
-            print(f"Form errors: {form.errors}")  # تصحيح
             messages.error(request, "An error occurred in the form. Check the data.")
     else:
         form = ProfileUpdateForm(instance=request.user)
