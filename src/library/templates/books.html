@@ -76,14 +76,14 @@
                                     <div class="card h-100 shadow">
                                         <img src="{{ book.poster_image}}" class="card-img-top" alt="{{ book.title }}" style="height: 300px; object-fit: cover;">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ book.title }}</h5>
+                                            <h5 class="card-title">{{ book.title| truncatechars:20}}</h5>
                                             <p class="card-text">
                                                 <span class="badge bg-success rounded-pill">{{ book.category.name }}</span>
                                             </p>
 
                                             
                                             <!-- المؤلف -->
-                                            <p class="card-text">Written by <strong>{{ book.author }}</strong></p>
+                                            <p class="card-text">Written by <strong>{{ book.author| truncatechars:20 }}</strong></p>
                                             
                                             <div class="row" >
                                                 
