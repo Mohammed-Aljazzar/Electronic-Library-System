@@ -26,7 +26,7 @@
                     <h2 class="text-center mt-5 mb-4">Update My Profile</h2>
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="row">
+                        {% comment %} <div class="row">
                             <div class="mb-3 mt-5 col-12 col-lg-6">
                                 <!-- عرض الصورة الحالية -->
                                 {% if form.instance.profile_picture %}
@@ -42,6 +42,24 @@
                                 </label>
                                 <!-- حقل تحميل الصورة المخفي -->
                                 <p hidden>{{ form.profile_picture }}</p>
+                            </div>
+                        </div> {% endcomment %}
+                        <div class="row">
+                            <div class="mb-3 mt-5 col-12 col-lg-6">
+                                <!-- عرض الصورة الحالية -->
+                                {% if form.instance.profile_picture %}
+                                    <img src="{{ form.instance.profile_picture }}?v={{ now|date:'U' }}" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 180px; height: 180px;">
+                                {% else %}
+                                    <p>No profile picture available.</p>
+                                {% endif %}
+                            </div>
+                            <div style="position: relative;" class="col-12 col-lg-6">
+                                <!-- حقل تحميل الصورة المخفي -->
+                                <input type="file" name="profile_picture" id="id_profile_picture" style="display: none;" accept="image/*">
+                                <!-- زر لتعديل الصورة -->
+                                <label for="id_profile_picture" class="btn btn-success" style="position: absolute; bottom: 0; right: 0;">
+                                    <i class="fa fa-edit"></i> Change Picture
+                                </label>
                             </div>
                         </div>
                         <div class="row">
