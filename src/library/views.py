@@ -21,7 +21,11 @@ from accounts.forms import UserSignupForm
 from django.http import HttpResponseForbidden
 import requests
 from io import BytesIO
+import cloudinary.uploader
+from django.db.models.functions import TruncMonth  # لتجميع حسب الشهر
 # Create your views here.
+
+
 def home(request):
     books = Book.objects.all()
     category = request.GET.get('category')
@@ -289,6 +293,25 @@ def all_comments(request, book_id):
     return render(request, 'all_comments.html', {'book': book, 'comments': page_obj})
 
 
+# @staff_member_required
+# def add_book(request):
+#     if not request.user.is_superuser:
+#         return HttpResponseForbidden("Only superusers can add books.")
+    
+#     if request.method == "POST":
+#         form = BookForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             book = form.save(commit=False)
+#             book.added_by = request.user
+#             book.save()
+#             messages.success(request, "Book added successfully!")
+#             return redirect('library:books')
+#     else:
+#         form = BookForm()
+#     return render(request, 'add_book.html', {'form': form})
+
+
+
 @staff_member_required
 def add_book(request):
     if not request.user.is_superuser:
@@ -299,12 +322,25 @@ def add_book(request):
         if form.is_valid():
             book = form.save(commit=False)
             book.added_by = request.user
+            
+            if 'poster_image' in request.FILES:
+                upload_result = cloudinary.uploader.upload(
+                    request.FILES['poster_image'],
+                    folder='books/posters/',
+                    resource_type='image'
+                )
+                book.poster_image = upload_result['secure_url']
+            
             book.save()
-            messages.success(request, "Book added successfully!")
+            messages.success(request, "The book has been added successfully!")
             return redirect('library:books')
+        else:
+            print(form.errors)
+            messages.error(request, "An error occurred in the form. Check the data.")
     else:
         form = BookForm()
     return render(request, 'add_book.html', {'form': form})
+
 
 @staff_member_required
 def add_category(request):
@@ -319,7 +355,6 @@ def add_category(request):
     return render(request, 'add_category.html', {'form': form})
 
 
-from django.db.models.functions import TruncMonth  # لتجميع حسب الشهر
 
 @staff_member_required
 def admin_dashboard(request):
@@ -372,9 +407,24 @@ def edit_book(request, book_id):
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
+            # التحقق مما إذا تم رفع صورة جديدة
+            if 'poster_image' in request.FILES:
+                # رفع الصورة الجديدة إلى Cloudinary
+                upload_result = cloudinary.uploader.upload(
+                    request.FILES['poster_image'],
+                    folder='books/posters/',  # نفس المجلد المستخدم في models.py
+                    overwrite=True,  # الكتابة فوق الصورة القديمة إذا لزم الأمر
+                    invalidate=True  # إلغاء التخزين المؤقت في Cloudinary
+                )
+                # تحديث حقل poster_image بالرابط الجديد
+                book.poster_image = upload_result['secure_url']
+            # حفظ باقي التغييرات
             form.save()
-            messages.success(request, "Book updated successfully!")
+            messages.success(request, "The book updated successfully!")
             return redirect('library:admin_dashboard')
+        else:
+            messages.error(request, "An error occurred in the form. Check the data.")
+            print(form.errors)  # طباعة الأخطاء للتصحيح
     else:
         form = BookForm(instance=book)
     return render(request, 'edit_book.html', {'form': form, 'book': book})
