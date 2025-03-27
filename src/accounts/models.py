@@ -16,7 +16,8 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15)
     country_code = models.CharField(max_length=5)
     gender = models.CharField(max_length=1, choices=Gender.choices)
-    profile_picture = models.ImageField(upload_to='profile_pictures/')
+    # profile_picture = models.ImageField(upload_to='profile_pictures/')
+    profile_picture = models.CharField(max_length=255, blank=True, null=True)
     can_add_books = models.BooleanField(default=False, verbose_name="Can Add Books")
 
     
