@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomLoginForm  # استيراد النموذج المخصص
 from .utils import send_welcome_email  # استيراد الوظيفة
 import cloudinary
+import cloudinary.uploader
 
 # def signup_view(request):
 #     if request.method == "POST":
@@ -117,25 +118,31 @@ def update_profile(request):
             user = form.save(commit=False)
             
             if 'profile_picture' in request.FILES:
-                upload_result = cloudinary.uploader.upload(
-                    request.FILES['profile_picture'],
-                    folder='profile_pictures/',
-                    resource_type='image',
-                    overwrite=True,
-                    invalidate=True
-                )
-                user.profile_picture = upload_result['secure_url']
+                try:
+                    print(f"Uploading profile picture: {request.FILES['profile_picture'].name}")  # تصحيح
+                    upload_result = cloudinary.uploader.upload(
+                        request.FILES['profile_picture'],
+                        folder='profile_pictures/',
+                        resource_type='image',
+                        overwrite=True,
+                        invalidate=True
+                    )
+                    user.profile_picture = upload_result['secure_url']
+                    print(f"Uploaded URL: {upload_result['secure_url']}")  # تصحيح
+                except Exception as e:
+                    print(f"Error uploading to Cloudinary: {str(e)}")  # التقاط الخطأ
+                    messages.error(request, f"Error uploading image: {str(e)}")
+                    return redirect('accounts:update_profile')
             
             user.save()
             messages.success(request, "Profile updated successfully")
             return redirect('accounts:update_profile')
         else:
-            print(form.errors)
+            print(f"Form errors: {form.errors}")  # تصحيح
             messages.error(request, "An error occurred in the form. Check the data.")
     else:
         form = ProfileUpdateForm(instance=request.user)
     return render(request, 'update_profile.html', {'form': form})
-
 
 @login_required
 def delete_account(request):
