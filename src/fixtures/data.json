@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$870000$45dL8hMFn2To2yvYNTznKP$zKRD59YKZAEQawWOvw/RUdprW33Kw9AVLwIgDYbyVtI=",
-    "last_login": null,
+    "last_login": "2025-03-26T12:23:43.232Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -19,7 +19,7 @@
     "phone_number": "1234567890",
     "country_code": "+1",
     "gender": "M",
-    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989175/mlql5h1tupssal9zmyzd.png",
+    "profile_picture": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743072795/profile_pictures/smqgstfmgtzmltlcjehi.jpg",
     "can_add_books": true,
     "groups": [],
     "user_permissions": []
@@ -56,13 +56,13 @@
   "pk": 3,
   "fields": {
     "password": "pbkdf2_sha256$870000$wANviDypo5DeugqeRsWCGt$2HwQSGfi51nE7uHwiJmy72Xy876O8lDlmfbs8qj4E8k=",
-    "last_login": null,
+    "last_login": "2025-03-29T12:35:04.413Z",
     "is_superuser": false,
     "username": "sameh",
     "first_name": "",
     "last_name": "",
     "email": "sameh2019@example.com",
-    "is_staff": false,
+    "is_staff": true,
     "is_active": true,
     "date_joined": "2025-03-26T11:39:42.505Z",
     "address": "456 User2 St",
@@ -72,6 +72,32 @@
     "country_code": "+1",
     "gender": "M",
     "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989178/egmscxanoam0it5hiwzv.jpg",
+    "can_add_books": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$chLdGeWR8iqUJa5PlAAIly$KYGdsxnj0nwm+sMJDyzZpcwdmZfOVzU07WHfFISRNyc=",
+    "last_login": "2025-03-29T12:34:10.619Z",
+    "is_superuser": true,
+    "username": "adam",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-03-29T09:11:31.800Z",
+    "address": "",
+    "profession": "",
+    "residence": "",
+    "phone_number": "",
+    "country_code": "",
+    "gender": "",
+    "profile_picture": null,
     "can_add_books": false,
     "groups": [],
     "user_permissions": []
@@ -474,19 +500,35 @@
   }
 },
 {
+  "model": "sessions.session",
+  "pk": "38diac8mvq88xfah1979eharxubkks61",
+  "fields": {
+    "session_data": ".eJxVjs0OgjAQhN-lZ9N0-4Pg0TvP0Oy2W0EMTaDowfju0oSDXueb-TJv4XErg99WXvwYxUVYcfrNCMPEcwXxjvMty5Dnsowka0UedJV9jvy4Ht0_wYDrsK9dUC1w6pTuHDbExEBkCKwJeG4pRAXGKqMNNUkzYNJO6dYyKTaooUop58mDf4784v1QWTb-fAHRND-J:1tyVOA:Li9Zt91d2wWOTb-qeCN_qedSStNytMEx4XxAQFbuOFg",
+    "expire_date": "2025-04-12T12:34:14.527Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "gjrbunamazyxieyw6yuzh0pq74pwe33w",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hAGKKhL9z0DmWFGqRpISrsy3l2bdKHb_977L5VwXUpau8xpYnVWTh1-N8L8kLoBvmO9NZ1bXeaJ9KbonXY9NpbnZXf_Dgr28q2t8dl5zNbSIEYMSYDoEdlHEXZXjIEgWwIkkGMeyFE0nm1wwHBCUe8P-Ys4kQ:1tyVOy:7Yu0_xepvzH3I6vbHvytOQvDbfDAtnLkgiuvAnkhEK8",
+    "expire_date": "2025-04-12T12:35:04.423Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "n0cadillvbl5dv19hishky76tp6bnkel",
+  "fields": {
+    "session_data": ".eJxVjssOgjAURP-la9O0pS9duvcbmt4HghiaUNCF8d-FhIVsz5mZzEekvMxdWipPqSdxEVqc_hlkHHjcBD3yeC8SyzhPPcgtIndb5a0QP6979jDQ5dqtbTSYMzrnkUi30ASD8ext8MYFDdiarCxE1GjYOq-URYjAlqihVlGI6yiUMqQmvXp-83ponhbeoT7A7w947UeT:1txPXP:WDhlPraMoUhmZL9gt0WxATLdB4pCEW4ze6Tg8tyRU04",
+    "expire_date": "2025-04-09T12:07:15.600Z"
+  }
+},
+{
   "model": "library.category",
   "pk": 1,
   "fields": {
     "name": "Technology",
     "description": "Technology books and world."
-  }
-},
-{
-  "model": "library.category",
-  "pk": 2,
-  "fields": {
-    "name": "History",
-    "description": "Books based on historical events and facts."
   }
 },
 {
@@ -502,7 +544,7 @@
   "pk": 1,
   "fields": {
     "title": "R For Data Science",
-    "description": "R for Data Science, written by Hadley Wickham and Garrett Grolemund...",
+    "description": "R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...",
     "author": "Hadley Wickham and Garrett Grolemund",
     "category": 1,
     "link": "https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview",
@@ -512,9 +554,9 @@
     "total_pages": 520,
     "language": "English",
     "status": "published",
-    "views_count": 150,
+    "views_count": 155,
     "quote": "A journey of a thousand miles begins with a single step.",
-    "download_count": 50
+    "download_count": 54
   }
 },
 {
@@ -526,35 +568,75 @@
     "author": "Princeton University Press",
     "category": 3,
     "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
-    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989181/opkclyny2pkd5bz67ffc.png",
+    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1742993162/books/posters/jfaoi3n3o6hghadmtqhn.png",
     "publish_date": "2021-06-10",
     "added_by": 1,
     "total_pages": 33,
     "language": "English",
-    "status": "published",
-    "views_count": 200,
+    "status": "draft",
+    "views_count": 201,
     "quote": "Science is the key to understanding the universe.",
     "download_count": 80
   }
 },
 {
   "model": "library.book",
-  "pk": 3,
+  "pk": 4,
   "fields": {
-    "title": "The History Book",
-    "description": "The ultimate aim of history is human self-knowledge...",
-    "author": "Alexandra Beeden, Sam Kennedy",
-    "category": 2,
-    "link": "https://example.com/history_world",
-    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989183/kqosarkjhkrg2k78sfz4.png",
-    "publish_date": "2019-03-22",
+    "title": "test",
+    "description": "test",
+    "author": "test",
+    "category": 1,
+    "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
+    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743063308/books/posters/mqt3v90kzzec0lh6ezxo.jpg",
+    "publish_date": "2025-03-26",
     "added_by": 1,
-    "total_pages": 354,
+    "total_pages": 111,
+    "language": "en",
+    "status": "draft",
+    "views_count": 1,
+    "quote": "",
+    "download_count": 0
+  }
+},
+{
+  "model": "library.book",
+  "pk": 5,
+  "fields": {
+    "title": "new",
+    "description": "new",
+    "author": "new",
+    "category": 1,
+    "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
+    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1742993662/books/posters/oyfsdly2hndepxzeph51.jpg",
+    "publish_date": "2025-03-26",
+    "added_by": 1,
+    "total_pages": 111,
+    "language": "en",
+    "status": "draft",
+    "views_count": 1,
+    "quote": "",
+    "download_count": 0
+  }
+},
+{
+  "model": "library.book",
+  "pk": 6,
+  "fields": {
+    "title": "test 2",
+    "description": "test 2",
+    "author": "Alexandra Beeden, Sam Kennedy",
+    "category": 1,
+    "link": "https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview",
+    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743063374/books/posters/hn4tnrr6wwilwlcrezho.jpg",
+    "publish_date": "2025-03-27",
+    "added_by": 1,
+    "total_pages": 123,
     "language": "English",
-    "status": "published",
-    "views_count": 50,
-    "quote": "History teaches us the lessons of the past.",
-    "download_count": 20
+    "status": "draft",
+    "views_count": 1,
+    "quote": "",
+    "download_count": 0
   }
 },
 {
