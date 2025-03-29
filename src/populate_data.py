@@ -78,9 +78,9 @@ def populate():
     # 2. Create regular users (who cannot add books)
     users_data = [
         {
-            'username': 'ahmed',
-            'email': 'ahmed211@example.com',
-            'password': 'user123',
+            'username': 'salah',
+            'email': 'salahsaef40@gmail.com',
+            'password': 'salah123',
             'address': '123 User1 St',
             'profession': 'Teacher',
             'residence': 'User1 City',
@@ -91,14 +91,27 @@ def populate():
             'can_add_books': False  # Regular user cannot add books
         },
         {
-            'username': 'sameh',
-            'email': 'sameh2019@example.com',
-            'password': 'user123',
-            'address': '456 User2 St',
-            'profession': 'Student',
-            'residence': 'User2 City',
-            'phone_number': '4445556666',
-            'country_code': '+1',
+            'username': 'mohammed',
+            'email': 'mohammedjarad970@gmail.com',
+            'password': 'mohammed123',
+            'address': 'Gabalia Camp',
+            'profession': 'Programmer',
+            'residence': 'Gaza City',
+            'phone_number': '0597174645',
+            'country_code': '+970',
+            'gender': 'M',
+            'profile_picture': 'profile_pictures/user2.jpg',
+            'can_add_books': False  # Regular user cannot add books
+        },
+        {
+            'username': 'mohammed',
+            'email': 'mohammedibrahimja2001@gmail.com',
+            'password': 'mohammed123',
+            'address': 'Al uruba St',
+            'profession': 'Enginner',
+            'residence': 'Rafah City',
+            'phone_number': '057465929',
+            'country_code': '+970',
             'gender': 'M',
             'profile_picture': 'profile_pictures/user2.jpg',
             'can_add_books': False  # Regular user cannot add books
