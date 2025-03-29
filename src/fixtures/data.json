@@ -3,23 +3,23 @@
   "model": "accounts.customuser",
   "pk": 1,
   "fields": {
-    "password": "pbkdf2_sha256$870000$45dL8hMFn2To2yvYNTznKP$zKRD59YKZAEQawWOvw/RUdprW33Kw9AVLwIgDYbyVtI=",
-    "last_login": "2025-03-26T12:23:43.232Z",
+    "password": "pbkdf2_sha256$870000$XbXgmp9QuP6ywv46uvpY3V$+z5XeM/64pHS0dj1K1L41WRpCgKRIPLlQO9TIQ4UW1E=",
+    "last_login": null,
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
     "last_name": "",
-    "email": "admin@example.com",
+    "email": "m.i.aljazzar19@gmail.com",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2025-03-26T11:39:39.751Z",
-    "address": "123 Admin St",
+    "date_joined": "2025-03-29T12:53:03.466Z",
+    "address": "Al-Uruba Street",
     "profession": "Administrator",
-    "residence": "Admin City",
-    "phone_number": "1234567890",
-    "country_code": "+1",
+    "residence": "Rafah City",
+    "phone_number": "0598048284",
+    "country_code": "+970",
     "gender": "M",
-    "profile_picture": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743072795/profile_pictures/smqgstfmgtzmltlcjehi.jpg",
+    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252779/dlgulrvxgllcvsqtg0r8.png",
     "can_add_books": true,
     "groups": [],
     "user_permissions": []
@@ -29,23 +29,23 @@
   "model": "accounts.customuser",
   "pk": 2,
   "fields": {
-    "password": "pbkdf2_sha256$870000$dedlOxdrr2bHFgqRwO890q$n4G/gVUb1BQxufuiS7qui99QM/yTyI1dKslAUo2Cj4g=",
+    "password": "pbkdf2_sha256$870000$avNSVtRBWCMGCvritkRzfV$cCtpExDN54of3pqtQuVD+dBzRSvfQD1hqUzB6O1Dk7c=",
     "last_login": null,
     "is_superuser": false,
-    "username": "ahmed",
+    "username": "salah",
     "first_name": "",
     "last_name": "",
-    "email": "ahmed211@example.com",
+    "email": "salahsaef40@gmail.com",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2025-03-26T11:39:41.128Z",
+    "date_joined": "2025-03-29T12:53:04.809Z",
     "address": "123 User1 St",
     "profession": "Teacher",
     "residence": "User1 City",
     "phone_number": "1112223333",
     "country_code": "+1",
     "gender": "F",
-    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989177/elgkledwvazgmblmwaca.jpg",
+    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252780/rkmx3csqxg3f7fpxzpf4.jpg",
     "can_add_books": false,
     "groups": [],
     "user_permissions": []
@@ -55,49 +55,23 @@
   "model": "accounts.customuser",
   "pk": 3,
   "fields": {
-    "password": "pbkdf2_sha256$870000$wANviDypo5DeugqeRsWCGt$2HwQSGfi51nE7uHwiJmy72Xy876O8lDlmfbs8qj4E8k=",
-    "last_login": "2025-03-29T12:35:04.413Z",
+    "password": "pbkdf2_sha256$870000$IMeLEh1Tlnzqv9CKVgImUR$+pXkiC3uYhHC7yVOjF/mwxbAaveOV2DUCZQADc1xeTM=",
+    "last_login": null,
     "is_superuser": false,
-    "username": "sameh",
+    "username": "mohammed",
     "first_name": "",
     "last_name": "",
-    "email": "sameh2019@example.com",
-    "is_staff": true,
+    "email": "mohammedjarad970@gmail.com",
+    "is_staff": false,
     "is_active": true,
-    "date_joined": "2025-03-26T11:39:42.505Z",
-    "address": "456 User2 St",
-    "profession": "Student",
-    "residence": "User2 City",
-    "phone_number": "4445556666",
-    "country_code": "+1",
+    "date_joined": "2025-03-29T12:53:06.245Z",
+    "address": "Gabalia Camp",
+    "profession": "Programmer",
+    "residence": "Gaza City",
+    "phone_number": "0597174645",
+    "country_code": "+970",
     "gender": "M",
-    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989178/egmscxanoam0it5hiwzv.jpg",
-    "can_add_books": false,
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "accounts.customuser",
-  "pk": 4,
-  "fields": {
-    "password": "pbkdf2_sha256$870000$chLdGeWR8iqUJa5PlAAIly$KYGdsxnj0nwm+sMJDyzZpcwdmZfOVzU07WHfFISRNyc=",
-    "last_login": "2025-03-29T12:34:10.619Z",
-    "is_superuser": true,
-    "username": "adam",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2025-03-29T09:11:31.800Z",
-    "address": "",
-    "profession": "",
-    "residence": "",
-    "phone_number": "",
-    "country_code": "",
-    "gender": "",
-    "profile_picture": null,
+    "profile_picture": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252782/mfajyc98a8djgbdadwhv.jpg",
     "can_add_books": false,
     "groups": [],
     "user_permissions": []
@@ -500,35 +474,19 @@
   }
 },
 {
-  "model": "sessions.session",
-  "pk": "38diac8mvq88xfah1979eharxubkks61",
-  "fields": {
-    "session_data": ".eJxVjs0OgjAQhN-lZ9N0-4Pg0TvP0Oy2W0EMTaDowfju0oSDXueb-TJv4XErg99WXvwYxUVYcfrNCMPEcwXxjvMty5Dnsowka0UedJV9jvy4Ht0_wYDrsK9dUC1w6pTuHDbExEBkCKwJeG4pRAXGKqMNNUkzYNJO6dYyKTaooUop58mDf4784v1QWTb-fAHRND-J:1tyVOA:Li9Zt91d2wWOTb-qeCN_qedSStNytMEx4XxAQFbuOFg",
-    "expire_date": "2025-04-12T12:34:14.527Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "gjrbunamazyxieyw6yuzh0pq74pwe33w",
-  "fields": {
-    "session_data": ".eJxVjEEOwiAQRe_C2hAGKKhL9z0DmWFGqRpISrsy3l2bdKHb_977L5VwXUpau8xpYnVWTh1-N8L8kLoBvmO9NZ1bXeaJ9KbonXY9NpbnZXf_Dgr28q2t8dl5zNbSIEYMSYDoEdlHEXZXjIEgWwIkkGMeyFE0nm1wwHBCUe8P-Ys4kQ:1tyVOy:7Yu0_xepvzH3I6vbHvytOQvDbfDAtnLkgiuvAnkhEK8",
-    "expire_date": "2025-04-12T12:35:04.423Z"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "n0cadillvbl5dv19hishky76tp6bnkel",
-  "fields": {
-    "session_data": ".eJxVjssOgjAURP-la9O0pS9duvcbmt4HghiaUNCF8d-FhIVsz5mZzEekvMxdWipPqSdxEVqc_hlkHHjcBD3yeC8SyzhPPcgtIndb5a0QP6979jDQ5dqtbTSYMzrnkUi30ASD8ext8MYFDdiarCxE1GjYOq-URYjAlqihVlGI6yiUMqQmvXp-83ponhbeoT7A7w947UeT:1txPXP:WDhlPraMoUhmZL9gt0WxATLdB4pCEW4ze6Tg8tyRU04",
-    "expire_date": "2025-04-09T12:07:15.600Z"
-  }
-},
-{
   "model": "library.category",
   "pk": 1,
   "fields": {
     "name": "Technology",
     "description": "Technology books and world."
+  }
+},
+{
+  "model": "library.category",
+  "pk": 2,
+  "fields": {
+    "name": "History",
+    "description": "Books based on historical events and facts."
   }
 },
 {
@@ -544,19 +502,19 @@
   "pk": 1,
   "fields": {
     "title": "R For Data Science",
-    "description": "R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...R for Data Science, written by Hadley Wickham and Garrett Grolemund...",
+    "description": "R for Data Science, written by Hadley Wickham and Garrett Grolemund...",
     "author": "Hadley Wickham and Garrett Grolemund",
     "category": 1,
     "link": "https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview",
-    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1742989180/ylbli0fzpccx0h5mezkm.png",
+    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252784/vkkfdugkcflwibato2jt.png",
     "publish_date": "2020-01-15",
     "added_by": 1,
     "total_pages": 520,
     "language": "English",
     "status": "published",
-    "views_count": 155,
+    "views_count": 150,
     "quote": "A journey of a thousand miles begins with a single step.",
-    "download_count": 54
+    "download_count": 50
   }
 },
 {
@@ -568,75 +526,35 @@
     "author": "Princeton University Press",
     "category": 3,
     "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
-    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1742993162/books/posters/jfaoi3n3o6hghadmtqhn.png",
+    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252785/ngbo60nyrgzd5hulem2l.png",
     "publish_date": "2021-06-10",
     "added_by": 1,
     "total_pages": 33,
     "language": "English",
-    "status": "draft",
-    "views_count": 201,
+    "status": "published",
+    "views_count": 200,
     "quote": "Science is the key to understanding the universe.",
     "download_count": 80
   }
 },
 {
   "model": "library.book",
-  "pk": 4,
+  "pk": 3,
   "fields": {
-    "title": "test",
-    "description": "test",
-    "author": "test",
-    "category": 1,
-    "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
-    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743063308/books/posters/mqt3v90kzzec0lh6ezxo.jpg",
-    "publish_date": "2025-03-26",
-    "added_by": 1,
-    "total_pages": 111,
-    "language": "en",
-    "status": "draft",
-    "views_count": 1,
-    "quote": "",
-    "download_count": 0
-  }
-},
-{
-  "model": "library.book",
-  "pk": 5,
-  "fields": {
-    "title": "new",
-    "description": "new",
-    "author": "new",
-    "category": 1,
-    "link": "https://drive.google.com/file/d/1IlMuaYVjEN-GP8Ld8Ig6JlNcBtzo0kC7/preview",
-    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1742993662/books/posters/oyfsdly2hndepxzeph51.jpg",
-    "publish_date": "2025-03-26",
-    "added_by": 1,
-    "total_pages": 111,
-    "language": "en",
-    "status": "draft",
-    "views_count": 1,
-    "quote": "",
-    "download_count": 0
-  }
-},
-{
-  "model": "library.book",
-  "pk": 6,
-  "fields": {
-    "title": "test 2",
-    "description": "test 2",
+    "title": "The History Book",
+    "description": "The ultimate aim of history is human self-knowledge...",
     "author": "Alexandra Beeden, Sam Kennedy",
-    "category": 1,
-    "link": "https://drive.google.com/file/d/128occVvihArdgqN4Yo19gaBcYRd4RYpr/preview",
-    "poster_image": "https://res.cloudinary.com/dpthr5ymy/image/upload/v1743063374/books/posters/hn4tnrr6wwilwlcrezho.jpg",
-    "publish_date": "2025-03-27",
+    "category": 2,
+    "link": "https://example.com/history_world",
+    "poster_image": "http://res.cloudinary.com/dpthr5ymy/image/upload/v1743252787/dtldo3wepj2d5ypan9rm.png",
+    "publish_date": "2019-03-22",
     "added_by": 1,
-    "total_pages": 123,
+    "total_pages": 354,
     "language": "English",
-    "status": "draft",
-    "views_count": 1,
-    "quote": "",
-    "download_count": 0
+    "status": "published",
+    "views_count": 50,
+    "quote": "History teaches us the lessons of the past.",
+    "download_count": 20
   }
 },
 {
@@ -647,8 +565,8 @@
     "user": 3,
     "text": "Amazing book! I loved the storyline.",
     "rating": 4.5,
-    "created_at": "2025-03-26T11:39:47.436Z",
-    "updated_at": "2025-03-26T11:39:47.436Z"
+    "created_at": "2025-03-29T12:53:11.183Z",
+    "updated_at": "2025-03-29T12:53:11.183Z"
   }
 },
 {
@@ -659,8 +577,8 @@
     "user": 1,
     "text": "A must-read for data science lovers.",
     "rating": 5.0,
-    "created_at": "2025-03-26T11:39:47.450Z",
-    "updated_at": "2025-03-26T11:39:47.450Z"
+    "created_at": "2025-03-29T12:53:11.198Z",
+    "updated_at": "2025-03-29T12:53:11.198Z"
   }
 },
 {
@@ -671,8 +589,8 @@
     "user": 3,
     "text": "Very informative and well-written.",
     "rating": 4.0,
-    "created_at": "2025-03-26T11:39:47.461Z",
-    "updated_at": "2025-03-26T11:39:47.461Z"
+    "created_at": "2025-03-29T12:53:11.211Z",
+    "updated_at": "2025-03-29T12:53:11.211Z"
   }
 }
 ]
