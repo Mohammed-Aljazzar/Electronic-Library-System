@@ -16,6 +16,7 @@ urlpatterns = [
     path('success_contact/', views.success_contact, name='success_contact'),
     path('add-book/', views.add_book, name='add_book'),
     path('add-category/', views.add_category, name='add_category'),
+    path('category/delete/<int:category_id>/', views.delete_category, name='delete_category'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
     path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),

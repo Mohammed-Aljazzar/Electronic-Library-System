@@ -89,6 +89,9 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            next_url = request.POST.get('next')
+            if next_url and next_url != '':
+                return redirect(next_url)
             messages.success(request, "You have successfully logged in.")
             
             # التحقق مما إذا كان المستخدم أدمن (is_staff أو is_superuser)

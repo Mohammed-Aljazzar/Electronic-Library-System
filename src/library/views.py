@@ -58,7 +58,6 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
-@login_required
 def book_list(request):
     # استرداد جميع الكتب مع حساب متوسط التقييم
     books = Book.objects.all().annotate(average_rating=Avg('comments__rating'))
@@ -283,7 +282,6 @@ def contact_view(request):
     
     return render(request, 'home.html')
 
-@login_required
 def all_comments(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     comments = book.comments.all()
@@ -355,6 +353,17 @@ def add_category(request):
     return render(request, 'add_category.html', {'form': form})
 
 
+@staff_member_required
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == "POST":
+        try:
+            category.delete()
+            messages.success(request, f"Category '{category.name}' deleted successfully!")
+        except Exception as e:
+            messages.error(request, f"Cannot delete category '{category.name}' because it is associated with books.")
+        return redirect('library:admin_dashboard')
+    return render(request, 'delete_category_confirm.html', {'category': category})
 
 @staff_member_required
 def admin_dashboard(request):
@@ -367,9 +376,17 @@ def admin_dashboard(request):
     draft_books = Book.objects.filter(status='draft').count()
     
     # جلب قائمة المستخدمين والكتب
-    users = CustomUser.objects.all()
-    books = Book.objects.all()
+    users_list = CustomUser.objects.all()
+    user_paginator = Paginator(users_list, 10)  
+    user_page_number = request.GET.get('user_page')
+    users = user_paginator.get_page(user_page_number)
 
+    books_list = Book.objects.all()
+    book_paginator = Paginator(books_list, 10)  
+    book_page_number = request.GET.get('book_page')
+    books = book_paginator.get_page(book_page_number)
+
+    categories = Category.objects.annotate(book_count=Count('categories'))  # حساب عدد الكتب لكل تصنيف
     # بيانات التصنيفات (للرسم البياني الدائري السابق)
     category_data = Category.objects.annotate(book_count=Count('categories')).values('name', 'book_count')
 
@@ -396,6 +413,7 @@ def admin_dashboard(request):
         'draft_books': draft_books,
         'users': users,
         'books': books,
+        'categories': categories,
         'category_data': json.dumps(list(category_data)),  # للرسم البياني الدائري
         'publish_data': json.dumps(publish_data_json),     # للرسم البياني الخطي
     }

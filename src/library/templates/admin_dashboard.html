@@ -2,94 +2,139 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
+<style>
+    /* تحسين الجداول على الشاشات الصغيرة */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* تحسين التمرير على الأجهزة المحمولة */
+    }
+    .table th, .table td {
+        white-space: nowrap; /* منع التفاف النصوص */
+        font-size: 0.9rem; /* تقليل حجم الخط */
+        padding: 0.5rem; /* تقليل المسافات الداخلية */
+    }
+    .table img {
+        width: 25px; /* تقليل حجم الصورة */
+        height: 25px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .btn-sm {
+        padding: 0.2rem 0.5rem; /* تقليل حجم الأزرار */
+        font-size: 0.8rem;
+    }
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 0.75rem; /* تقليل المسافات على الشاشات الصغيرة */
+        }
+        h4 {
+            font-size: 1.25rem; /* تقليل حجم العناوين */
+        }
+        .pagination {
+            font-size: 0.8rem; /* تقليل حجم الترقيم */
+        }
+    }
+    .chart-container {
+        height: 400px; /* ارتفاع ثابت للحاوية */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .chart-container .card-body {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
 <div class="container mt-5">
     <h2 class="mb-2">Dashboard</h2>
 
     <!-- أزرار الإجراءات -->
-    <div class="mt-4 mb-4">
-        <a href="{% url 'library:add_book' %}" class="btn btn-primary btn-md me-1 my-1">Add New Book</a>
-        <a href="{% url 'library:add_category' %}" class="btn btn-success btn-md me-1 my-1">Add New Category</a>
-        <a href="{% url 'library:add_user' %}" class="btn btn-warning btn-md me-1 my-1">Add New User</a> <!-- زر جديد -->
-        <a href="{% url 'library:books' %}" class="btn btn-secondary btn-md me-1 my-1">View All Books</a>
+    <div class="mt-4 mb-4 d-flex flex-wrap gap-2">
+        <a href="{% url 'library:add_book' %}" class="btn btn-primary btn-md">Add New Book</a>
+        <a href="{% url 'library:add_category' %}" class="btn btn-success btn-md">Add New Category</a>
+        <a href="{% url 'library:add_user' %}" class="btn btn-warning btn-md">Add New User</a>
+        <a href="{% url 'library:books' %}" class="btn btn-secondary btn-md">View All Books</a>
     </div>
     
     <!-- إحصائيات -->
-    <div class="row g-4 mb-5">
-        <div class="col-sm-12 col-md-4 col-lg-2">
+    <div class="row g-3 mb-5">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-primary text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-book fa-2x mb-3"></i>
+                    <i class="fas fa-book fa-2x mb-2"></i>
                     <h5 class="card-title">Total Books</h5>
-                    <p class="card-text display-5 fw-bold">{{ total_books }}</p>
+                    <p class="card-text display-6 fw-bold">{{ total_books }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-success text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-list fa-2x mb-3"></i>
+                    <i class="fas fa-list fa-2x mb-2"></i>
                     <h5 class="card-title">Total Categories</h5>
-                    <p class="card-text display-5 fw-bold">{{ total_categories }}</p>
+                    <p class="card-text display-6 fw-bold">{{ total_categories }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-info text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-comments fa-2x mb-3"></i>
+                    <i class="fas fa-comments fa-2x mb-2"></i>
                     <h5 class="card-title">Total Comments</h5>
-                    <p class="card-text display-5 fw-bold">{{ total_comments }}</p>
+                    <p class="card-text display-6 fw-bold">{{ total_comments }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-warning text-dark h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-eye fa-2x mb-3"></i>
+                    <i class="fas fa-eye fa-2x mb-2"></i>
                     <h5 class="card-title">Total Views</h5>
-                    <p class="card-text display-5 fw-bold">{{ total_views }}</p>
+                    <p class="card-text display-6 fw-bold">{{ total_views }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-danger text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-download fa-2x mb-3"></i>
+                    <i class="fas fa-download fa-2x mb-2"></i>
                     <h5 class="card-title">Total Downloads</h5>
-                    <p class="card-text display-5 fw-bold">{{ total_downloads }}</p>
+                    <p class="card-text display-6 fw-bold">{{ total_downloads }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-12 col-md-6 col-lg-2">
             <div class="card shadow-sm text-center bg-secondary text-white h-100" style="border-radius: 15px; transition: transform 0.3s;">
                 <div class="card-body">
-                    <i class="fas fa-hourglass-half fa-2x mb-3"></i>
+                    <i class="fas fa-hourglass-half fa-2x mb-2"></i>
                     <h5 class="card-title">Draft Books</h5>
-                    <p class="card-text display-5 fw-bold">{{ draft_books }}</p>
+                    <p class="card-text display-6 fw-bold">{{ draft_books }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- الرسم البياني الدائري للتصنيفات -->
     <div class="row mt-5 mb-5">
         <h4 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Charts</h4>
-        <div class="col-12 col-md-6 mb-2">
-            <div class="card shadow-sm">
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card shadow-sm chart-container">
                 <div class="card-body text-center">
                     {% if category_data %}
-                        <canvas id="categoryChart" style="width: 100%; max-height: 400px;"></canvas>
+                        <canvas id="categoryChart" style="width: 100%; height: 350px;"></canvas>
                     {% else %}
                         <p class="text-muted">No Categories Available</p>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="card shadow-sm">
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card shadow-sm chart-container">
                 <div class="card-body text-center">
                     {% if publish_data %}
-                        <canvas id="publishChart" style="width: 100%; min-height: 400px;"></canvas>
+                        <canvas id="publishChart" style="width: 100%; height: 350px;"></canvas>
                     {% else %}
                         <p class="text-muted">No Publish Data Available</p>
                     {% endif %}
@@ -109,6 +154,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Date Joined</th>
@@ -120,6 +166,13 @@
                                 {% for user in users %}
                                     <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
+                                        <td>
+                                            {% if user.profile_picture %}
+                                                <img src="{{ user.profile_picture }}" alt="{{ user.username }}">
+                                            {% else %}
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAZlBMVEX///8AAAD8/PwLCwusrKz5+fmzs7Pl5eXf39/s7Ow5OTn09PS/v7/i4uLv7++7u7t/f3+cnJwyMjIfHx9UVFRra2vHx8eRkZHZ2dkaGhrPz89ycnItLS2Hh4dKSkphYWFBQUEmJiYXI4ZfAAAHb0lEQVR4nO2d6XajOgyAyw6BECDsS4D3f8mbTKenlo0T8II99/j73RA5yNosuV9fBoPBYDAYDAaDwWAwGAwGg8HAQRr0SeI/SZL+mqqWhoPrrZmG+VEU9667F8VjHqbGD1VLxYBdN1U5WgRjWTWJrVq6QwTNo3DIlXzjjI/m33k/7XynruTveu5zq1rKXbTl+4X8UPa6a5t9rfYt5cUcar2cyN2/lBd5pFpiKl6/U8N+WXTVtdT9sO03cbV8OdeJZS2Wk2loptuZZSkvyl617Dh7DfIWD81W019oknbl0OSumzfZ3NH+ZtRqNQFluwxJFHue/QfPi6Mko/yhRvFAvCWfU21KGA6b69EmO7BJ8ZyxiWl/7uXjxnq8MyWmY5N27DJRl/IibhbiI6Ueq8lxudZtBUMJhxX/VHOGrJ9I7vhrcXf8yJ6Lv5z7Tb6sn7g+cH2pd4VbNhHIPZSHAl6DbeZ5t0ghni1MqrdNUkCBqgNxYzTAz46JPDlZ5FneWjGcGNO0KpAl5y5umKYczU5W+HGlNiDA1P6wH/fg58urDCl3kkBZGHS+1+bVRPDFTAwpsN3AXaMu74Q/64Vp+0bQT9WiZdyLB35Vx2erTdyAo1Lma2JQS2bVEGjd76pygRqVovNZH3MDwZ0qxwl+UnaHB1/NLFLCA4Cdm7M/B+YQ4uQ7QoCKwFNh6YFBU1MO8FERMp4nZYJeMQdolNhxieCiJmARI91BVkSCC5ez69GssxMl3xFAjFhyhSExKIkcyiIEcUUFqPieBYyziuwZuMyJ71kg91YROaOHZHz7/+lp0DK0CnOGurq7y/esG2pMVBTQ0JB55VSNGg1ZOVWWiQn5/pEzDWnRExEu/8sI6rYLzgOWUKfFcL+ZQvFipO0Z1YsRas1UGADUzzic5lS5nwERAKdqTKojABib8RVVQGymIjsDp7IlV8k7BQV0JXVAVM//9XwGZJoOX6aJ/i6LGOkOAmoAA8+m0aAGEKIiLBx6pkN15n9VN4PaUTGfE8ETK84EnBngNi3miOYGup1U1ZrTFZViZnQ1sNTcqTptguczlst0PmP7epzPYCdnBdOrCWDbibo2OuxMM2P4Ve0JPGJW2EuLtQEw2ADsvJr5xEoAeB/AYfMcwc/PKvsAiA6Ng3VirKdBbYfGV5RBadZDq/GwnttBcfd5jclzJLGJsD6gQlkTwA94v1m5O1DE+7qdRvmQQ0A09NW7LLRXEx9Uuvu/IXs08x2NCWmO96h3GvRobnTPdtXHaLGuiF56NUkZjjfgcllF9lZlgowcHeBKVQVir4Ro1mWgmrV0YylWp3zz/5CSwr3GMzaHS+sZ32N/0Gi+KdoU8Gmg8taz/y7Jtr3WpU3ZaGDIfgmp8zOW8xqgyZuhpE9xXZS3Z0NCvPH8AItG0zPftDPT/Nzzzc1azTV9EzTUMax3dJNW++WH2KdvHCoXV0V3yR6IWOAzWkzNbBBODOONj0y73f/1mlViULIXxec5qJOx8bTmCM77CbWTwQp5DOS6hGZ2yuEwfxgDLZaTHrzQgMaelE42LZnN4Dj3df10RciTuVX8crzknYoVZTU1zyjT9X33GWs2U1W+M3mLr9QQpHlBk+wyNH7dBiB/9IK29nO6DV8bhWlNlFHCsaW59QElD7aj/rYxDvwHZ1AWqKUUj18l4Qd9icNke/jceigaCIw2VczJ912WFV/zzeUUSuKBcFOWJt1tkux0MzB1FKxmcy2HR+iajYc4pydrLXndV8cyZZlu3Kxx9pUaLWGOnAfj2fntQbzj5dTVXInLGbr3Ncx3BBNRqCpPLNfgR0xPG+RyRFaxS7jR846dYmLblpzHRD3xps9KcWwf37P7LzSgccXDVWfP3RUCIAyZiIHkFF/NeooRsPE4OROi3ymuu5czXs2Er0VQUkXsxEHMc98R4l8pLEGMcRspX9FWbL8IjHLxCzkOX2JxFCw2FOvdcF8seSoghM5adBtCD6OkTq6iQUXoOIczSFz4Y1UyFa2G+Vgm3E178JbEUWJvQAxfzCIhgMKu1KjkRTU36Pul9O3AVslVWjcd5ggkdSDDLxHlkgmwdixJGgAb6nhH86hAHyOt1wUMTFiNnBANpsqjNKtpg+/hHQGlAH8xiX2usPFTuC97ASOnUWJeC897WNvy39ICd8bWK78PG+iAjDKaDc6U5Ha7wEsTc/EmIAURLf3+UhF4wG6W4l0NGMt0JE+51CDeFK8FoGmfvxzzHtiWLzzahNMU0juQgZ4Nor/NQ2tl8rt2ExDSirYAoA1Ttpbheiba04AtwzL1cxCg1aKjDVDUOqGfGmwa0YUN1I1dThg/rNFocxT8cPSHOuP0JAA+WuyzQcbEeZPBLmxgAcTGAKAoe0IRWOrlDaDMcMr1I6AbT2zujAblvPey7MNdpZlP1OzLK/+ggLKWWMVGNVhmmfEXUDwVW9VCbcs5Q3vgX42IvfYUtfqXU04bQS2oFPro2XJ+sJZTOg6CBflKsYtJ3F/OaT70fOQrtRgUNBgMBoPBYDAYDAaDwWAwGAzK+Q/iglaW4i5jRAAAAABJRU5ErkJggg==" alt="No Image">
+                                            {% endif %}
+                                        </td>
                                         <td>{{ user.username }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.date_joined|date:"Y-m-d H:i" }}</td>
@@ -131,18 +184,49 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <a href="{% url 'library:delete_user' user.id %}" class="btn btn-sm btn-danger me-2" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
-                                            <a href="{% url 'library:toggle_user_status' user.id %}" class="btn btn-sm btn-info me-2">Change Status</a>
+                                            <div class="d-flex gap-1">
+                                                <a href="{% url 'library:delete_user' user.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                                                <a href="{% url 'library:toggle_user_status' user.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 {% empty %}
                                     <tr>
-                                        <td colspan="6" class="text-center">No users found.</td>
+                                        <td colspan="7" class="text-center">No users found.</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                    {% if users.paginator.num_pages > 1 %}
+                        <nav aria-label="User pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if users.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?user_page=1" aria-label="First">««</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?user_page={{ users.previous_page_number }}" aria-label="Previous">«</a>
+                                    </li>
+                                {% endif %}
+                                {% for num in users.paginator.page_range %}
+                                    {% if users.number == num %}
+                                        <li class="page-item active"><a class="page-link" href="?user_page={{ num }}">{{ num }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?user_page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if users.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?user_page={{ users.next_page_number }}" aria-label="Next">»</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?user_page={{ users.paginator.num_pages }}" aria-label="Last">»»</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -183,8 +267,8 @@
                                         {% for book in books %}
                                             <tr>
                                                 <th scope="row">{{ forloop.counter }}</th>
-                                                <td>{{ book.title }}</td>
-                                                <td>{{ book.author }}</td>
+                                                <td>{{ book.title|truncatechars:30 }}</td>
+                                                <td>{{ book.author|truncatechars:20 }}</td>
                                                 <td>
                                                     {% if book.status == 'pending' %}
                                                         <span class="badge bg-warning text-dark">Pending</span>
@@ -198,9 +282,11 @@
                                                 </td>
                                                 <td>{{ book.publish_date|date:"Y-m-d" }}</td>
                                                 <td>
-                                                    <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                    <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
-                                                    <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                    <div class="d-flex gap-1">
+                                                        <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                                        <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                                        <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         {% empty %}
@@ -230,14 +316,16 @@
                                             {% if book.status == 'published' %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ book.title }}</td>
-                                                    <td>{{ book.author }}</td>
+                                                    <td>{{ book.title|truncatechars:30 }}</td>
+                                                    <td>{{ book.author|truncatechars:20 }}</td>
                                                     <td><span class="badge bg-primary">Published</span></td>
                                                     <td>{{ book.publish_date|date:"Y-m-d" }}</td>
                                                     <td>
-                                                        <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                        <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
-                                                        <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                        <div class="d-flex gap-1">
+                                                            <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                                            <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                                            <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -268,14 +356,16 @@
                                             {% if book.status == 'draft' %}
                                                 <tr>
                                                     <th scope="row">{{ forloop.counter }}</th>
-                                                    <td>{{ book.title }}</td>
-                                                    <td>{{ book.author }}</td>
+                                                    <td>{{ book.title|truncatechars:30 }}</td>
+                                                    <td>{{ book.author|truncatechars:20 }}</td>
                                                     <td><span class="badge bg-secondary">Draft</span></td>
                                                     <td>{{ book.publish_date|date:"Y-m-d" }}</td>
                                                     <td>
-                                                        <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning me-2">Edit</a>
-                                                        <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger me-2">Delete</a>
-                                                        <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                        <div class="d-flex gap-1">
+                                                            <a href="{% url 'library:edit_book' book.id %}" class="btn btn-sm btn-warning">Edit</a>
+                                                            <a href="{% url 'library:delete_book' book.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                                            <a href="{% url 'library:toggle_book_status' book.id %}" class="btn btn-sm btn-info">Change Status</a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             {% endif %}
@@ -288,6 +378,76 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    {% if books.paginator.num_pages > 1 %}
+                        <nav aria-label="Book pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                {% if books.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?book_page=1" aria-label="First">««</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?book_page={{ books.previous_page_number }}" aria-label="Previous">«</a>
+                                    </li>
+                                {% endif %}
+                                {% for num in books.paginator.page_range %}
+                                    {% if books.number == num %}
+                                        <li class="page-item active"><a class="page-link" href="?book_page={{ num }}">{{ num }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?book_page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if books.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?book_page={{ books.next_page_number }}" aria-label="Next">»</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?book_page={{ books.paginator.num_pages }}" aria-label="Last">»»</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قائمة التصنيفات -->
+    <div class="row mt-5 mb-5">
+        <div class="col-12">
+            <h4 class="mb-3"><i class="fa fa-list"></i> Categories</h4>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Book Count</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ category.name }}</td>
+                                        <td>{{ category.description|truncatechars:30 }}</td>
+                                        <td>{{ category.book_count }}</td>
+                                        <td>
+                                            <a href="{% url 'library:delete_category' category.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this category? All related books will be affected.');">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No categories found.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -324,16 +484,7 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'top', labels: { font: { size: 14 } } },
-                        title: { display: true, text: 'Distribution of books by publication date', font: { size: 18 } },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    const value = tooltipItem.raw;
-                                    const percentage = ((value / categoryTotal) * 100).toFixed(1);
-                                    return `${tooltipItem.label}: ${value} (${percentage}%)`;
-                                }
-                            }
-                        }
+                        title: { display: true, text: 'Books by Category', font: { size: 18 } }
                     }
                 }
             });
@@ -357,23 +508,19 @@
                         borderColor: '#36A2EB',
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: '#36A2EB',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#36A2EB'
+                        tension: 0.4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { title: { display: true, text: 'Publish Date (Year-Month)' }, ticks: { autoSkip: true, maxTicksLimit: 10 } },
-                        y: { title: { display: true, text: 'Number of Books' }, beginAtZero: true }
+                        x: { title: { display: true, text: 'Publish Date' } },
+                        y: { title: { display: true, text: 'Books' }, beginAtZero: true }
                     },
                     plugins: {
-                        legend: { position: 'top', labels: { font: { size: 14 } } },
-                        title: { display: true, text: 'Distribution of books by publication date', font: { size: 18 } }
+                        legend: { position: 'top' },
+                        title: { display: true, text: 'Books by Publish Date', font: { size: 18 } }
                     }
                 }
             });

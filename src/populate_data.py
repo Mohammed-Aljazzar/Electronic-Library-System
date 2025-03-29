@@ -13,12 +13,6 @@ django.setup()
 from accounts.models import CustomUser
 from library.models import Category, Book, Comment
 
-# Configure Cloudinary
-# cloudinary.config(
-#     cloud_name=config('CLOUDINARY_CLOUD_NAME'),
-#     api_key=config('CLOUDINARY_API_KEY'),
-#     api_secret=config('CLOUDINARY_API_SECRET')
-# )
 
 cloudinary.config(
     cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
@@ -59,13 +53,13 @@ def populate():
        
         superuser = CustomUser.objects.create_superuser(
             username='admin',
-            email='admin@example.com',
-            password='Admin@123!',  # Stronger password
-            address='123 Admin St',
+            email='m.i.aljazzar19@gmail.com',
+            password='120190258',  # Stronger password
+            address='Al-Uruba Street',
             profession='Administrator',
-            residence='Admin City',
-            phone_number='1234567890',
-            country_code='+1',
+            residence='Rafah City',
+            phone_number='0598048284',
+            country_code='+970',
             gender='M',
             profile_picture=profile_picture_response['url'],  # Use Cloudinary URL
             can_add_books=True  # Superuser can add books
