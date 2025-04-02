@@ -56,7 +56,7 @@
         </ol>
     </nav>
     <!-- أزرار للأدمن فقط -->
-    {% if user.is_staff %}
+    {% if user.is_superuser %}
         <div class="mb-3">
             <a href="{% url 'library:add_book' %}" class="btn btn-primary me-2 btn-sm">Add New Book</a>
             <a href="{% url 'library:add_category' %}" class="btn btn-success btn-sm">Add New Category</a>

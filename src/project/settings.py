@@ -218,3 +218,6 @@ LOGGING = {
 #         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
 #     }
 # }
+
+# LOGIN_URL = '/accounts/login/'
+# LOGIN_REDIRECT_URL = '/library/home/'
