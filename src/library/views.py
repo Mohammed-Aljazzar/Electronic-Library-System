@@ -19,7 +19,11 @@ from django.db.models.functions import TruncMonth
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from django.http import HttpResponse
 # دالة للتحقق من Superuser
 def superuser_required(user):
     return user.is_superuser
@@ -417,3 +421,61 @@ def add_user(request):
     else:
         form = UserSignupForm()
     return render(request, 'add_user.html', {'form': form})
+
+
+@staff_member_required
+def export_books_to_pdf(request):
+    # إنشاء استجابة HTTP مع نوع المحتوى PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="books_list.pdf"'
+
+    # إعداد مستند PDF
+    doc = SimpleDocTemplate(response, pagesize=letter)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    # عنوان الجدول
+    title = Paragraph("Books List", styles['Heading1'])
+    elements.append(title)
+    elements.append(Paragraph("<br/><br/>", styles['Normal']))  # مسافة فارغة
+
+    # جلب جميع الكتب
+    books = Book.objects.all()
+
+    # إعداد بيانات الجدول
+    data = [['#', 'Title', 'Author', 'Status', 'Publish Date', 'Views', 'Downloads']]
+    for i, book in enumerate(books, start=1):
+        data.append([
+            str(i),
+            book.title,
+            book.author,
+            book.status.capitalize(),
+            book.publish_date.strftime('%Y-%m-%d') if book.publish_date else 'N/A',
+            str(book.views_count),
+            str(book.download_count)
+        ])
+
+    # إنشاء الجدول
+    table = Table(data, colWidths=[30, 150, 100, 80, 80, 60, 60])
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('ALIGN', (0, 0), (0, -1), 'CENTER'),  # محاذاة العمود الأول (رقم الكتاب)
+        ('ALIGN', (1, 0), (1, -1), 'LEFT'),    # محاذاة العنوان إلى اليسار
+        ('ALIGN', (2, 0), (2, -1), 'LEFT'),    # محاذاة المؤلف إلى اليسار
+    ]))
+
+    elements.append(table)
+
+    # بناء المستند
+    doc.build(elements)
+    return response

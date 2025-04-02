@@ -244,8 +244,14 @@
     <div class="row mt-5 mb-5">
         <div class="col-12">
             <h4 class="mb-3"><i class="fa fa-book"></i> Books</h4>
+            <div class="mb-3">
+                <a href="{% url 'library:export_books_to_pdf' %}" class="btn btn-primary btn-md">
+                    <i class="fas fa-file-pdf me-2"></i> Export Books to PDF
+                </a>
+            </div>
             <div class="card shadow-sm">
                 <div class="card-body">
+                    
                     <ul class="nav nav-tabs" id="bookTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All Books</button>

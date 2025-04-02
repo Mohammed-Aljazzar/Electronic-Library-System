@@ -13,7 +13,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     # دالة لعرض الصورة في قائمة المستخدمين
     def display_profile_picture(self, obj):
         if obj.profile_picture:
-            return format_html('<img src="{}" width="50" height="50" style="border-radius: 50%;" />', obj.profile_picture.url)
+            return format_html('<img src="{}" width="50" height="50" style="border-radius: 50%;" />', obj.profile_picture)
         return "No Image"
 
     display_profile_picture.short_description = 'Profile Picture'  # عنوان العمود
